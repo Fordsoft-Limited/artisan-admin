@@ -1,0 +1,31 @@
+[
+    {
+      "logo":"https://bit.ly/dan-abramov",
+      "name": "Dolapo", 
+      "businesstype": "Mechanic",
+      "phone":907327331 
+     
+    },
+    {
+        "logo":"https://bit.ly/dan-abramov",
+        "name": "Odofin", 
+        "businesstype": "Mechanic",
+        "phone":907327331 
+       
+      },
+      {
+        "logo":"https://bit.ly/dan-abramov",
+        "name": "Zik", 
+        "businesstype": "Mechanic",
+        "phone":907327331 
+      
+      },
+      {
+        "logo":"https://bit.ly/dan-abramov",
+        "name": "Tobi", 
+        "businesstype": "Mechanic",
+        "phone":907327331 
+       
+      }
+  ]
+  

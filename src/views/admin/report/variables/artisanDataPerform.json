@@ -1,0 +1,38 @@
+[
+    {
+      "ranking": 1,
+      "name":"Asiyanbola Ahmad",
+      "status": "Approved",
+      "member": "Artisan",
+      "business": "Tailor" 
+    },
+    {
+        "ranking": 2,
+        "name":"Zik Ahmad",
+      "status": "Disable",
+      "member": "Artisan",
+      "business": "Carpenter" 
+    },
+    {
+        "ranking": 3,
+        "name":"Zik Odofin",
+      "status": "Error",
+      "member": "Artisan",
+      "business": "Plumber" 
+    },
+    {
+        "ranking": 4,
+        "name":"Ahmad Odofin",
+      "status": "Approved",
+      "member": "Artisan",
+      "business": "Designer" 
+    },
+    {
+        "ranking": 5,
+        "name":"Ahmad Odofin",
+      "status": "Disable",
+      "member": "Artisan",
+      "business": "UI?UX" 
+    }
+  ]
+  
