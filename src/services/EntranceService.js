@@ -118,26 +118,11 @@ const EntranceService = {
     }
   },
 
-  async resetpassword(userId, resetPasswordRequest) {
-    try {
-      return await axios.post(
-        `${BASE_URL}/reset-password/${userId}`,
-        resetPasswordRequest
-      );
-    } catch (error) {
-      throw error;
-    }
-  },
-
   async forgetpassword(userId, forgotPasswordRequest) {
-    try {
-      return await axios.post(
-        `${BASE_URL}/forgot-password/${userId}`,
-        forgotPasswordRequest
-      );
-    } catch (error) {
-      throw error;
-    }
+    return await axios.post(
+      `${BASE_URL}/forgot-password/${userId}`,
+      forgotPasswordRequest
+    );
   },
 };
 
