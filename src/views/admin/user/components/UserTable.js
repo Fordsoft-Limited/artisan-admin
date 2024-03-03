@@ -26,7 +26,6 @@ import {
   useDisclosure,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { Link, useNavigate } from "react-router-dom";
 import React, { useMemo, useState, useEffect } from "react";
 import {
   useGlobalFilter,
@@ -38,7 +37,7 @@ import {
 // Custom components
 import Card from "components/card/Card";
 import Menu from "components/menu/MainMenu";
-import Upload from "./Upload";
+// import Upload from "./Upload";
 export default function Users(props) {
   const { columnsData, tableData } = props;
   const [formData, setFormData] = useState({
@@ -197,6 +196,12 @@ export default function Users(props) {
                         {cell.value}
                       </Text>
                     );
+                  } else if (cell.column.Header === "STATUS") {
+                    data = (
+                      <Text color={textColor} fontSize="sm" fontWeight="700">
+                        {cell.value}
+                      </Text>
+                    );
                   }
                   return (
                     <Td
@@ -328,56 +333,46 @@ export default function Users(props) {
       <Modal isOpen={isOpen} onClose={onClose} size="lg">
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Modal Title</ModalHeader>
+          <ModalHeader>Send Invitation</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Upload />
+            {/* <Upload /> */}
             <Box w="100%">
               <Flex gap="20px" mb="12px">
                 <Input
-                  value={formData.name}
                   variant="outline"
                   placeholder="Name"
                   name="name"
                   w="100%"
-                  onChange={handleInputChange}
                 />
                 <Input
-                  value={formData.address}
                   variant="outline"
-                  placeholder="Address"
+                  placeholder="Email"
                   name="address"
                   w="100%"
-                  onChange={handleInputChange}
                 />
               </Flex>
               <Flex gap="20px" mb="12px">
                 <Input
-                  value={formData.phone}
                   variant="outline"
                   name="phone"
                   type="tel"
                   placeholder="Phone number"
                   w="100%"
-                  onChange={handleInputChange}
                 />
-              </Flex>
-              <Flex>
-                <Textarea
-                  value={formData.description}
-                  name="description"
-                  onChange={handleInputChange}
-                  placeholder="Description"
+                <Input
+                  variant="outline"
+                  type="tel"
+                  placeholder="Status"
+                  w="100%"
+                  
                 />
               </Flex>
             </Box>
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={onClose}>
-              Close
-            </Button>
-            <Button variant="ghost">Add</Button>
+            <Button variant="ghost">Send Invitation</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
