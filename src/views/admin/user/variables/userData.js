@@ -2,15 +2,19 @@ export const userDataColumns = [
     
     {
       Header: "NAME",
-      accessor: "name",
+      accessor: "contact.name",
     },
     {
       Header: "EMAIL",
-      accessor: "email",
+      accessor: "contact.email",
     },
     {
       Header: "PHONE",
-      accessor: "phone",
+      accessor: "contact.phone",
+    },
+    {
+      Header: "STATUS",
+      accessor: "isActive",
     },
     
   ];

@@ -1,6 +1,7 @@
 import axios from "axios";
+import APP_CONSTANT from "../utils/Constant";
 
-const BASE_URL = "http://localhost:5000/api/v1/entrance";
+const BASE_URL =  APP_CONSTANT.baseUrl+"entrance";
 
 const EntranceService = {
   async listBlogs(page, limit) {

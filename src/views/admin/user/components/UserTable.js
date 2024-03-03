@@ -10,7 +10,6 @@ import {
   Select,
   Th,
   Thead,
-  Image,
   Tr,
   Input,
   Button,
@@ -26,7 +25,6 @@ import {
   useDisclosure,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { Link, useNavigate } from "react-router-dom";
 import React, { useMemo, useState, useEffect } from "react";
 import {
   useGlobalFilter,
@@ -37,29 +35,16 @@ import {
 
 // Custom components
 import Card from "components/card/Card";
-import Menu from "components/menu/MainMenu";
 import Upload from "./Upload";
-export default function Users(props) {
-  const { columnsData, tableData } = props;
-  const [formData, setFormData] = useState({
-    name: "",
-    address: "",
-    phone: "",
-    description: "",
-  });
+import AdminService from "services/AdminService";
+import APP_CONSTANT from "utils/Constant";
 
+export default function Users(props) {
+  const { columnsData } = props;
+  const [tableData, setTableData] = useState([])
   const columns = useMemo(() => columnsData, [columnsData]);
   const data = useMemo(() => tableData, [tableData]);
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:5000/api/v1/reports/users")
-      .then((res) => {
-        columns(Object.keys(res.data[0]));
-        data(res.data);
-      })
-      .catch((err) => console.log(err.message));
-  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -108,6 +93,26 @@ export default function Users(props) {
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const borderColor = useColorModeValue("gray.200", "whiteAlpha.100");
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [formData, setFormData] = useState({
+    name: "",
+    address: "",
+    phone: "",
+    description: "",
+  });
+
+  const fetchUserData = async () => {
+    try {
+      const response = await AdminService.getPaginatedUsers(APP_CONSTANT.defaultPage, APP_CONSTANT.defaultSize); // Call the function with page and limit
+      setTableData(response.data['data'])
+    } catch (error) {
+      console.error('Error fetching users:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchUserData();
+  }, []);
+  
   return (
     <Card
       direction="column"
@@ -122,7 +127,7 @@ export default function Users(props) {
           fontWeight="700"
           lineHeight="100%"
         >
-          Users
+          Available Users
         </Text>
         <Flex gap="10px">
           <Button
@@ -195,6 +200,13 @@ export default function Users(props) {
                     data = (
                       <Text color={textColor} fontSize="sm" fontWeight="700">
                         {cell.value}
+                      </Text>
+                    );
+                  }
+                  else if (cell.column.Header === "STATUS") {
+                    data = (
+                      <Text color={textColor} fontSize="sm" fontWeight="700">
+                        {cell.value?'Active':'Inactive'}
                       </Text>
                     );
                   }
@@ -328,7 +340,7 @@ export default function Users(props) {
       <Modal isOpen={isOpen} onClose={onClose} size="lg">
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Modal Title</ModalHeader>
+          <ModalHeader>Send New Invitation</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <Upload />
@@ -374,10 +386,7 @@ export default function Users(props) {
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={onClose}>
-              Close
-            </Button>
-            <Button variant="ghost">Add</Button>
+            <Button variant="ghost">Send Invite</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
