@@ -1,6 +1,7 @@
-import axios from "axios";
+import axiosInstance from './AxiosInterceptor';
+import APP_CONSTANT from "../utils/Constant";
 
-const BASE_URL = "http://localhost:5000/api/v1/actions";
+const BASE_URL =  APP_CONSTANT.baseUrl+"/actions";
 
 const ConversationService = {
   async addBlogWithAttachment(blogData, file) {
@@ -10,7 +11,7 @@ const ConversationService = {
       formData.append("content", blogData.content);
       formData.append("file", file);
 
-      return await axios.post(`${BASE_URL}/blogs`, formData, {
+      return await axiosInstance.post(`${BASE_URL}/blogs`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -27,7 +28,7 @@ const ConversationService = {
       formData.append("content", blogData.content);
       formData.append("file", file);
 
-      return await axios.post(`${BASE_URL}/advsertisement`, formData, {
+      return await axiosInstance.post(`${BASE_URL}/advsertisement`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -37,14 +38,14 @@ const ConversationService = {
     }
   },
 
-  async addArtisanWithAttachment(blogData, file) {
+  async addArtisanWithAttachment(artisanData, file) {
     try {
       const formData = new FormData();
-      formData.append("title", blogData.title);
-      formData.append("content", blogData.content);
+      formData.append("name", artisanData.name);
+      formData.append("email", artisanData.content);
       formData.append("file", file);
 
-      return await axios.post(`${BASE_URL}/artisan`, formData, {
+      return await axiosInstance.post(`${BASE_URL}/artisan`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -56,7 +57,7 @@ const ConversationService = {
 
   async deleteBlog(id) {
     try {
-      return await axios.delete(`${BASE_URL}/deleteBlog/${id}`);
+      return await axiosInstance.delete(`${BASE_URL}/deleteBlog/${id}`);
     } catch (error) {
       throw error;
     }
@@ -64,7 +65,7 @@ const ConversationService = {
 
   async deleteArtisan(id) {
     try {
-      return await axios.delete(`${BASE_URL}/deleteArtisan/${id}`);
+      return await axiosInstance.delete(`${BASE_URL}/deleteArtisan/${id}`);
     } catch (error) {
       throw error;
     }
@@ -72,7 +73,7 @@ const ConversationService = {
 
   async deleteAdvertisement(id) {
     try {
-      return await axios.delete(`${BASE_URL}/deleteAdvertisement/${id}`);
+      return await axiosInstance.delete(`${BASE_URL}/deleteAdvertisement/${id}`);
     } catch (error) {
       throw error;
     }
@@ -80,7 +81,7 @@ const ConversationService = {
 
   async deleteVisitor(id) {
     try {
-      return await axios.delete(`${BASE_URL}/deleteVisitor/${id}`);
+      return await axiosInstance.delete(`${BASE_URL}/deleteVisitor/${id}`);
     } catch (error) {
       throw error;
     }
@@ -88,7 +89,7 @@ const ConversationService = {
 
   async updateArtisan(id, payload) {
     try {
-      return await axios.put(`${BASE_URL}/updateArtisan/${id}`, payload);
+      return await axiosInstance.put(`${BASE_URL}/updateArtisan/${id}`, payload);
     } catch (error) {
       throw error;
     }
@@ -96,21 +97,15 @@ const ConversationService = {
 
   async updateBlog(id, payload) {
     try {
-      return await axios.put(`${BASE_URL}/updateBlog/${id}`, payload);
+      return await axiosInstance.put(`${BASE_URL}/updateBlog/${id}`, payload);
     } catch (error) {
       throw error;
     }
   },
 
   async updateAdvert(id, payload) {
-    try {
-      return await axios.put(`${BASE_URL}/updateAdvert/${id}`, payload);
-    } catch (error) {
-      throw error;
-    }
+      return await axiosInstance.put(`${BASE_URL}/updateAdvert/${id}`, payload);
   },
 };
-
-
 
 export default ConversationService;
