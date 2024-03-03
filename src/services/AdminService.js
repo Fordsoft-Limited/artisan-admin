@@ -1,11 +1,13 @@
-import axios from "axios";
+import axiosInstance from './AxiosInterceptor';
+import APP_CONSTANT from '../utils/Constant'
 
-const BASE_URL = "http://localhost:5000/api/v1/reports";
+
+const BASE_URL = APP_CONSTANT.baseUrl+"reports";
 
 const AdminService = {
   async getPaginatedVisitors(page, limit) {
     try {
-      return await axios.get(`${BASE_URL}/visitors`, {
+      return await axiosInstance.get(`${BASE_URL}/visitors`, {
         params: {
           page,
           limit,
@@ -18,7 +20,7 @@ const AdminService = {
 
   async getPaginatedUsers(page, limit) {
     try {
-      return await axios.get(`${BASE_URL}/users`, {
+      return await axiosInstance.get(`${BASE_URL}/users`, {
         params: {
           page,
           limit,
@@ -31,7 +33,7 @@ const AdminService = {
 
   async sendInvitationToUser(data) {
     try {
-      return await axios.post(`${BASE_URL}/user/send/invitation`, data);
+      return await axiosInstance.post(`${BASE_URL}/user/send/invitation`, data);
     } catch (error) {
       throw error;
     }

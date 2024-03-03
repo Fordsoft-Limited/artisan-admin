@@ -21,8 +21,8 @@
 
 */
 
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React, { useState } from 'react';
+import { NavLink ,useHistory} from "react-router-dom";
 // Chakra imports
 import {
   Box,
@@ -47,6 +47,9 @@ import illustration from "assets/img/auth/auth.png";
 import { FcGoogle } from "react-icons/fc";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { RiEyeCloseLine } from "react-icons/ri";
+import EntranceService from "../../../services/EntranceService";
+import LocalStorageService from '../../../services/LocalStorageService';
+import APP_CONSTANT from '../../../utils/Constant'
 
 function SignIn() {
   // Chakra color mode
@@ -66,8 +69,33 @@ function SignIn() {
     { bg: "whiteAlpha.200" }
   );
   const [show, setShow] = React.useState(false);
+
   const handleClick = () => setShow(!show);
+
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [rememberLogin, setRememberLogin] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const history = useHistory();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Prevent default form submission behavior
+    try {
+      const response = await EntranceService.login({ username, password})
+      if(response.data['statusCode']===APP_CONSTANT.successCode){
+        LocalStorageService.storeTokenFromResponse(response.data)
+        history.push('/admin/default')
+      }else{
+        setErrorMessage(response.data['data'])
+      }
+ 
+    } catch (error) {
+      console.log(error?.response?.data['data'])
+      setErrorMessage(error?.response?.data['data']);
+    }
+  };
   return (
+    <form onSubmit={handleSubmit}>
     <DefaultAuth  image={illustration}>
       <Flex
         maxW={{ base: "100%", md: "max-content" }}
@@ -127,6 +155,17 @@ function SignIn() {
             </Text>
             <HSeparator />
           </Flex>
+          {errorMessage && (
+  <Text
+    mb='36px'
+    ms='4px'
+    color={textColorSecondary}
+    fontWeight='400'
+    fontSize='md'
+  >
+    {errorMessage}
+  </Text>
+)}
           <FormControl>
             <FormLabel
               display='flex'
@@ -135,7 +174,7 @@ function SignIn() {
               fontWeight='500'
               color={textColor}
               mb='8px'>
-              Email<Text color={brandStars}>*</Text>
+              Username<Text color={brandStars}>*</Text>
             </FormLabel>
             <Input
               isRequired={true}
@@ -147,6 +186,7 @@ function SignIn() {
               mb='24px'
               fontWeight='500'
               size='lg'
+              onChange={(e) => setUsername(e.target.value)}
             />
             <FormLabel
               ms='4px'
@@ -165,6 +205,7 @@ function SignIn() {
                 size='lg'
                 type={show ? "text" : "password"}
                 variant='auth'
+                onChange={(e) => setPassword(e.target.value)}
               />
               <InputRightElement display='flex' alignItems='center' mt='4px'>
                 <Icon
@@ -180,7 +221,9 @@ function SignIn() {
                 <Checkbox
                   id='remember-login'
                   colorScheme='brandScheme'
+                  checked={rememberLogin}
                   me='10px'
+                  onChange={(e) => setRememberLogin(e.target.checked)}
                 />
                 <FormLabel
                   htmlFor='remember-login'
@@ -202,6 +245,7 @@ function SignIn() {
               </NavLink>
             </Flex>
             <Button
+             type="submit"
               fontSize='sm'
               variant='brand'
               fontWeight='500'
@@ -209,6 +253,7 @@ function SignIn() {
               h='50'
               mb='24px'>
               Sign In
+             
             </Button>
           </FormControl>
           <Flex
@@ -233,6 +278,7 @@ function SignIn() {
         </Flex>
       </Flex>
     </DefaultAuth>
+    </form>
   );
 }
 
