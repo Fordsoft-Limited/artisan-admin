@@ -71,7 +71,7 @@ export default function AdvertTable(props) {
                     Report Performance
                 </Text>
                 <Flex gap='10px'>
-                    <Button colorScheme='purple' variant='outline' fontSize='16px' onClick={onOpen}>Add</Button>
+                    <Button colorScheme='purple' variant='outline' fontSize='16px'>Add</Button>
                     <Button colorScheme='green' variant='outline' fontSize='16px'>Edit</Button>
                     <Button colorScheme='red' variant='outline' fontSize='16px'>Delete</Button>
                 </Flex>

@@ -20,4 +20,5 @@ export const advertDataColumns = [
         accessor: "category",
       },
   ];
-  
+
+ 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 
 // Chakra imports
 import {
@@ -61,6 +61,16 @@ export default function ArtisanMenu(props) {
     } = useDisclosure();
 
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const [isLoading, setIsLoading] = useState(false);
+const handleClick = () => {
+  setIsLoading(true);
+
+
+  setTimeout(() => {
+    setIsLoading(false);
+  }, 2000);
+};
+    
 
     return (
         <>
@@ -197,7 +207,7 @@ export default function ArtisanMenu(props) {
                         <Button colorScheme='blue' mr={3} onClick={onClose}>
                             Close
                         </Button>
-                        <Button variant='ghost'>Secondary Action</Button>
+                        <Button variant='ghost' onClick={handleClick}  isLoading={isLoading} >Secondary Action</Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>
