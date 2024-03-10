@@ -22,6 +22,9 @@ const LocalStorageService = {
       const { data } = response;
       console.log(JSON.stringify(data))
       LocalStorageService.set('authData', data);
+    },
+   isAuthenticated: () => {
+      return !!LocalStorageService.getToken(); // Check if token exists in localStorage
     }
   };
   
