@@ -139,7 +139,7 @@ function SignIn() {
             </Flex>
             {errorMessage && (
               <Text
-                color={textColorSecondary}
+                color="black"
                 marginBottom="36px"
                 marginLeft="4px"
                 padding="10px"
