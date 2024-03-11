@@ -38,6 +38,7 @@ import Card from "components/card/Card";
 import Upload from "./Upload";
 import AdminService from "services/AdminService";
 import APP_CONSTANT from "utils/Constant";
+import ConversationService from "services/ConversatonService";
 
 export default function Users(props) {
   const { columnsData } = props;
@@ -90,7 +91,7 @@ export default function Users(props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [formData, setFormData] = useState({
     name: "",
-    address: "",
+    email: "",
     phone: ""
   });
   const[errorMessage, setErrorMessage] = useState('')
@@ -104,16 +105,15 @@ export default function Users(props) {
     e.preventDefault();
     try {
       const response = await AdminService.sendInvitationToUser(formData)
-      if(response.data['statusCode']===APP_CONSTANT.successCode){
+      if(response.data['message']===APP_CONSTANT.messageSuccess){
         setSuccessMessage(response.data['data'])
-        await fetchUserData()
-        setFormData({name:'', email:'', phone:''})
+        await fetchUserData() // fetch the data again
+        setFormData({name:'', email:'', phone:''}) // clear form field
       }else{
         setErrorMessage(response.data['data'])
       }
  
     } catch (error) {
-      console.log(error?.response?.data['data'])
       setErrorMessage(error?.response?.data['data']);
     }
   }
@@ -126,6 +126,20 @@ export default function Users(props) {
       console.error('Error fetching users:', error);
     }
   };
+
+  const deleteUser= async(userId)=>{
+try{
+  const prompt = window.confirm("Are you sure to delete the selected record")
+  if(prompt){
+    const deleteResponse = await ConversationService.deleteUser(userId)
+    if(deleteResponse.data['message']===APP_CONSTANT.messageSuccess){
+      fetchUserData()
+    }
+  }
+}catch(error){
+  console.error('Error fetching users:', error);
+}
+  }
 
   useEffect(() => {
     fetchUserData();
@@ -225,7 +239,7 @@ export default function Users(props) {
                   else{
                     data = (
                       <Flex gap="5px">
-                    <Button colorScheme="red" variant="outline" fontSize="10px">
+                    <Button colorScheme="red" variant="outline" fontSize="10px" onClick={() => deleteUser(cell.value)}>
                       Delete
                     </Button>
                       </Flex>

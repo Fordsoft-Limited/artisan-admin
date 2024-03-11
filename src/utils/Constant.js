@@ -4,7 +4,8 @@ const APP_CONSTANT = {
     defaultLimit: 50,
     defaultPage:1,
     successCode: 200,
-    message: 'Success'
+    messageSuccess: 'Success',
+    messageFail: 'Fail',
   };
   
   export default APP_CONSTANT;
