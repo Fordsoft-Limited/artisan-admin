@@ -46,11 +46,6 @@ export default function Users(props) {
   const data = useMemo(() => tableData, [tableData]);
 
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
-  };
-
   const tableInstance = useTable(
     {
       columns,
@@ -96,9 +91,32 @@ export default function Users(props) {
   const [formData, setFormData] = useState({
     name: "",
     address: "",
-    phone: "",
-    description: "",
+    phone: ""
   });
+  const[errorMessage, setErrorMessage] = useState('')
+  const[successMessage, setSuccessMessage] = useState('')
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
+  };
+  const sendInvitation = async(e)=>{
+    e.preventDefault();
+    try {
+      const response = await AdminService.sendInvitationToUser(formData)
+      if(response.data['statusCode']===APP_CONSTANT.successCode){
+        setSuccessMessage(response.data['data'])
+        await fetchUserData()
+        setFormData({name:'', email:'', phone:''})
+      }else{
+        setErrorMessage(response.data['data'])
+      }
+ 
+    } catch (error) {
+      console.log(error?.response?.data['data'])
+      setErrorMessage(error?.response?.data['data']);
+    }
+  }
 
   const fetchUserData = async () => {
     try {
@@ -137,12 +155,6 @@ export default function Users(props) {
             onClick={onOpen}
           >
             Add
-          </Button>
-          <Button colorScheme="green" variant="outline" fontSize="16px">
-            Edit
-          </Button>
-          <Button colorScheme="red" variant="outline" fontSize="16px">
-            Delete
           </Button>
         </Flex>
       </Flex>
@@ -208,6 +220,18 @@ export default function Users(props) {
                       <Text color={textColor} fontSize="sm" fontWeight="700">
                         {cell.value?'Active':'Inactive'}
                       </Text>
+                    );
+                  }
+                  else{
+                    data = (
+                      <Flex gap="5px">
+                        <Button colorScheme="green" variant="outline" fontSize="10px">
+                      Edit
+                    </Button>
+                    <Button colorScheme="red" variant="outline" fontSize="10px">
+                      Delete
+                    </Button>
+                      </Flex>
                     );
                   }
                   return (
@@ -340,10 +364,10 @@ export default function Users(props) {
       <Modal isOpen={isOpen} onClose={onClose} size="lg">
         <ModalOverlay />
         <ModalContent>
+          <form onSubmit={sendInvitation}>
           <ModalHeader>Send New Invitation</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Upload />
             <Box w="100%">
               <Flex gap="20px" mb="12px">
                 <Input
@@ -355,10 +379,11 @@ export default function Users(props) {
                   onChange={handleInputChange}
                 />
                 <Input
-                  value={formData.address}
+                  value={formData.email}
                   variant="outline"
-                  placeholder="Address"
-                  name="address"
+                  placeholder="Email Address"
+                  name="email"
+                  type="email"
                   w="100%"
                   onChange={handleInputChange}
                 />
@@ -374,20 +399,42 @@ export default function Users(props) {
                   onChange={handleInputChange}
                 />
               </Flex>
-              <Flex>
-                <Textarea
-                  value={formData.description}
-                  name="description"
-                  onChange={handleInputChange}
-                  placeholder="Description"
-                />
-              </Flex>
+             <Flex>
+             {errorMessage && (
+  <Text
+    mb='36px'
+    ms='4px'
+    color={'red.500'}
+    fontWeight='400'
+    fontSize='md'
+    w="100%"
+  >
+    {errorMessage}
+  </Text>
+)}
+             </Flex>
+
+             <Flex>
+             {successMessage && (
+  <Text
+    mb='36px'
+    ms='4px'
+    color={'green.400'}
+    fontWeight='400'
+    fontSize='md'
+    w="100%"
+  >
+    {successMessage}
+  </Text>
+)}
+             </Flex>
             </Box>
           </ModalBody>
 
           <ModalFooter>
-            <Button variant="ghost">Send Invite</Button>
+            <Button variant="ghost" type="submit">Send Invite</Button>
           </ModalFooter>
+          </form>
         </ModalContent>
       </Modal>
     </Card>
