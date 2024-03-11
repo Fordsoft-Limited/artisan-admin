@@ -9,7 +9,7 @@ import {
     Tr,
     useColorModeValue,
   } from "@chakra-ui/react";
-  import React, { useMemo } from "react";
+  import React, { useMemo, useState, useEffect } from "react";
   import {
     useGlobalFilter,
     usePagination,
@@ -18,14 +18,33 @@ import {
   } from "react-table";
   
   // Custom components
+  import AdminService from '../../../../services/AdminService'
+  import APP_CONSTANT  from '../../../../utils/Constant' 
   import Card from "components/card/Card";
   import Menu from "components/menu/MainMenu";
   export default function VistorsTable(props) {
-    const { columnsData, tableData } = props;
-  
+    const { columnsData } = props;
+  const [tableData, setTableData] = useState([])
     const columns = useMemo(() => columnsData, [columnsData]);
     const data = useMemo(() => tableData, [tableData]);
   
+const fetchVisitorsData = async () => {
+  try {
+    const response = await AdminService.getPaginatedVisitors(
+      APP_CONSTANT.defaultPage,
+      APP_CONSTANT.defaultSize
+    ); // Call the function with page and limit
+    setTableData(response.data["data"]);
+  } catch (error) {
+    console.error("Error fetching visitors:", error);
+  }
+};
+
+useEffect(() => {
+  fetchVisitorsData();
+}, []);
+
+
     const tableInstance = useTable(
       {
         columns,
@@ -118,7 +137,7 @@ import {
                           {cell.value}
                         </Text>
                       );
-                    } else if (cell.column.Header === "DATE") {
+                    } else if (cell.column.Header === "STREET") {
                       data = (
                         <Text color={textColor} fontSize='sm' fontWeight='700'>
                           {cell.value}

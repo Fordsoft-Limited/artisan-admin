@@ -41,6 +41,7 @@ export default function CheckTable(props) {
 
     const columns = useMemo(() => columnsData, [columnsData]);
     const data = useMemo(() => tableData, [tableData]);
+  const [checked, setChecked] = useState(false);
 
     const tableInstance = useTable(
         {
@@ -126,19 +127,23 @@ const handleClick = () => {
                                     let data = "";
                                     if (cell.column.Header === "LOGO") {
                                         data = (
-                                            <Flex align='center'>
-                                                <Checkbox
-                                                    defaultChecked={cell.value[1]}
-                                                    colorScheme='brandScheme'
-                                                    me='10px'
-                                                />
-                                                <Image
-                                                    borderRadius='full'
-                                                    boxSize='50px'
-                                                    src={cell.value}
-                                                    alt='Dan Abramov'
-                                                />
-                                            </Flex>
+                                          <Flex align="center">
+                                            <Checkbox
+                                              id="remember-login"
+                                              colorScheme="brandScheme"
+                                              checked={checked}
+                                              me="10px"
+                                              onChange={(e) =>
+                                                setChecked(e.target.checked)
+                                              }
+                                            />
+                                            <Image
+                                              borderRadius="full"
+                                              boxSize="50px"
+                                              src={cell.value}
+                                              alt="Dan Abramov"
+                                            />
+                                          </Flex>
                                         );
                                     } else if (cell.column.Header === "NAME") {
                                         data = (

@@ -1,4 +1,3 @@
-import axios from "axios";
 
 import {
   Flex,
@@ -35,9 +34,9 @@ import {
 
 // Custom components
 import Card from "components/card/Card";
-import Upload from "./Upload";
-import AdminService from "services/AdminService";
-import APP_CONSTANT from "utils/Constant";
+
+import APP_CONSTANT from '../../../../utils/Constant'
+import AdminService from '../../../../services/AdminService'
 import ConversationService from "services/ConversatonService";
 
 export default function Users(props) {
@@ -45,6 +44,7 @@ export default function Users(props) {
   const [tableData, setTableData] = useState([]);
   const columns = useMemo(() => columnsData, [columnsData]);
   const data = useMemo(() => tableData, [tableData]);
+  const [checked, setChecked] = useState(false);
 
   const tableInstance = useTable(
     {
@@ -208,9 +208,11 @@ try{
                     data = (
                       <Flex align="center">
                         <Checkbox
-                          defaultChecked={cell.value[1]}
+                          id="remember-login"
                           colorScheme="brandScheme"
+                          checked={checked}
                           me="10px"
+                          onChange={(e) => setChecked(e.target.checked)}
                         />
                         <Text color={textColor} fontSize="sm" fontWeight="700">
                           {cell.value}

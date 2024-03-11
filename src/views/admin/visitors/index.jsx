@@ -13,7 +13,8 @@ export default function Visitors() {
         columns={{ sm: 1, md: 1 }}
         spacing={{ base: "20px", xl: "20px" }}
       >
-        <VistorsTable columnsData={columnsDataColumns}
+        <VistorsTable 
+          columnsData={columnsDataColumns}
           tableData={tabledataColumns}/>
       </SimpleGrid>
     </Box>
