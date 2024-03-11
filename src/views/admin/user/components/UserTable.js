@@ -225,9 +225,6 @@ export default function Users(props) {
                   else{
                     data = (
                       <Flex gap="5px">
-                        <Button colorScheme="green" variant="outline" fontSize="10px">
-                      Edit
-                    </Button>
                     <Button colorScheme="red" variant="outline" fontSize="10px">
                       Delete
                     </Button>
