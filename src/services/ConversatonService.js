@@ -4,55 +4,17 @@ import APP_CONSTANT from "../utils/Constant";
 const BASE_URL =  APP_CONSTANT.baseUrl+"/actions";
 
 const ConversationService = {
-  async addBlogWithAttachment(blogData, file) {
-    try {
-      const formData = new FormData();
-      formData.append("title", blogData.title);
-      formData.append("content", blogData.content);
-      formData.append("file", file);
+  async addBlog(data) {
+    return await axiosInstance.post(`${BASE_URL}/blog`, data);
+  },
+ 
 
-      return await axiosInstance.post(`${BASE_URL}/blogs`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-    } catch (error) {
-      throw error;
-    }
+  async addAvertisement(data) {
+    return await axiosInstance.post(`${BASE_URL}/advsertisement`, data);
   },
 
-  async addNewAdvertisementWithAttachment(blogData, file) {
-    try {
-      const formData = new FormData();
-      formData.append("title", blogData.title);
-      formData.append("content", blogData.content);
-      formData.append("file", file);
-
-      return await axiosInstance.post(`${BASE_URL}/advsertisement`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-    } catch (error) {
-      throw error;
-    }
-  },
-
-  async addArtisanWithAttachment(artisanData, file) {
-    try {
-      const formData = new FormData();
-      formData.append("name", artisanData.name);
-      formData.append("email", artisanData.content);
-      formData.append("file", file);
-
-      return await axiosInstance.post(`${BASE_URL}/artisan`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-    } catch (error) {
-      throw error;
-    }
+  async addArtisan(data) {
+    return await axiosInstance.post(`${BASE_URL}/artisan`, data);
   },
 
   async deleteBlog(id) {
@@ -63,7 +25,7 @@ const ConversationService = {
     }
   },
   async deleteUser(id) {
-      return await axiosInstance.delete(`${BASE_URL}/user/delete/${id}`);
+    return await axiosInstance.delete(`${BASE_URL}/user/delete/${id}`);
   },
 
   async deleteArtisan(id) {
@@ -76,7 +38,9 @@ const ConversationService = {
 
   async deleteAdvertisement(id) {
     try {
-      return await axiosInstance.delete(`${BASE_URL}/deleteAdvertisement/${id}`);
+      return await axiosInstance.delete(
+        `${BASE_URL}/deleteAdvertisement/${id}`
+      );
     } catch (error) {
       throw error;
     }
@@ -92,7 +56,10 @@ const ConversationService = {
 
   async updateArtisan(id, payload) {
     try {
-      return await axiosInstance.put(`${BASE_URL}/updateArtisan/${id}`, payload);
+      return await axiosInstance.put(
+        `${BASE_URL}/updateArtisan/${id}`,
+        payload
+      );
     } catch (error) {
       throw error;
     }
@@ -107,7 +74,7 @@ const ConversationService = {
   },
 
   async updateAdvert(id, payload) {
-      return await axiosInstance.put(`${BASE_URL}/updateAdvert/${id}`, payload);
+    return await axiosInstance.put(`${BASE_URL}/updateAdvert/${id}`, payload);
   },
 };
 
