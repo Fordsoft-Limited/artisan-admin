@@ -1,4 +1,3 @@
-import axios from "axios";
 
 import {
   Flex,
@@ -14,7 +13,6 @@ import {
   Input,
   Button,
   Modal,
-  Textarea,
   ModalOverlay,
   ModalContent,
   ModalHeader,
@@ -35,7 +33,6 @@ import {
 
 // Custom components
 import Card from "components/card/Card";
-import Upload from "./Upload";
 import AdminService from "services/AdminService";
 import APP_CONSTANT from "utils/Constant";
 import ConversationService from "services/ConversatonService";

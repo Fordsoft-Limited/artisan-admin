@@ -1,9 +1,5 @@
 import React from "react";
-import { Box, Flex, SimpleGrid } from "@chakra-ui/react";
-import { Grid, GridItem } from "@chakra-ui/react";
-import Editor from "./components/Editor";
-import Action from "./components/Action";
-import Categories from "./components/Categories";
+import { Box, SimpleGrid } from "@chakra-ui/react";
 import NewBlog from "./components/NewBlog";
 import { blogData } from "./variables/BlogData";
 import RecentBlog from "./components/RecentBlog";

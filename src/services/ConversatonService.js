@@ -4,29 +4,24 @@ import APP_CONSTANT from "../utils/Constant";
 const BASE_URL =  APP_CONSTANT.baseUrl+"/actions";
 
 const ConversationService = {
-  async addBlogWithAttachment(blogData, file) {
-    try {
+  async addBlogWithAttachment(blogData) {
       const formData = new FormData();
-      formData.append("title", blogData.title);
-      formData.append("content", blogData.content);
-      formData.append("file", file);
+      formData.append("payload", JSON.stringify({ title: blogData.title, content: blogData.content }));
+      formData.append("file", blogData.file);
 
       return await axiosInstance.post(`${BASE_URL}/blogs`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-    } catch (error) {
-      throw error;
-    }
+   
   },
 
-  async addNewAdvertisementWithAttachment(blogData, file) {
+  async addNewAdvertisementWithAttachment(blogData) {
     try {
       const formData = new FormData();
-      formData.append("title", blogData.title);
-      formData.append("content", blogData.content);
-      formData.append("file", file);
+      formData.append("payload", JSON.stringify({title: blogData.title, content: blogData.content}));
+      formData.append("file", blogData.file);
 
       return await axiosInstance.post(`${BASE_URL}/advsertisement`, formData, {
         headers: {

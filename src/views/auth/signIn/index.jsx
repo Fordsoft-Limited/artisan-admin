@@ -55,10 +55,11 @@ function SignIn() {
   const [rememberLogin, setRememberLogin] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const history = useHistory();
-
+  const [isLoading, setIsLoading] = useState(false);
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission behavior
     try {
+      setIsLoading(true)
       const response = await EntranceService.login({ username, password})
       if(response.data['statusCode']===APP_CONSTANT.successCode){
         LocalStorageService.storeTokenFromResponse(response.data)
@@ -66,8 +67,10 @@ function SignIn() {
       }else{
         setErrorMessage(response.data['data'])
       }
+      setIsLoading(false)
  
     } catch (error) {
+      setIsLoading(false)
       console.log(error?.response?.data['data'])
       setErrorMessage(error?.response?.data['data']);
     }
@@ -229,7 +232,7 @@ function SignIn() {
               fontWeight='500'
               w='100%'
               h='50'
-              mb='24px'>
+              mb='24px' isLoading={isLoading}>
               Sign In
              
             </Button>
