@@ -1,23 +1,23 @@
 export const advertDataColumns = [
     {
       Header: "NAME",
-      accessor: "name",
+      accessor: "contact.name",
     },
     {
       Header: "PHONE",
-      accessor: "phone",
+      accessor: "contact.phone",
     },
     {
       Header: "EMAIL",
-      accessor: "email",
+      accessor: "contact.email",
     },
     {
       Header: "BUSINESSNAME",
-      accessor: "businessname",
+      accessor: "contact.businessname",
     },
     {
         Header: "CATEGORY",
-        accessor: "category",
+        accessor: "contact.category",
       },
   ];
 

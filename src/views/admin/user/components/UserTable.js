@@ -207,13 +207,6 @@ try{
                   if (cell.column.Header === "NAME") {
                     data = (
                       <Flex align="center">
-                        <Checkbox
-                          id="remember-login"
-                          colorScheme="brandScheme"
-                          checked={checked}
-                          me="10px"
-                          onChange={(e) => setChecked(e.target.checked)}
-                        />
                         <Text color={textColor} fontSize="sm" fontWeight="700">
                           {cell.value}
                         </Text>

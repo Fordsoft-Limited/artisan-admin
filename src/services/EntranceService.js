@@ -17,7 +17,7 @@ const EntranceService = {
     }
   },
 
-  async listPaginatedAdvertisement(page, limit) {
+  async listAdvertisement(page, limit) {
     try {
       return await axios.get(`${BASE_URL}/advsertisements`, {
         params: {
@@ -30,7 +30,7 @@ const EntranceService = {
     }
   },
 
-  async listPaginatedArtisan(page, limit) {
+  async listArtisan(page, limit) {
     try {
       return await axios.get(`${BASE_URL}/artisans`, {
         params: {
