@@ -14,4 +14,9 @@ export const  blogData = [
         title:"Because it must be assumed that the truth or something",
         date: "Mon, July 17"
     }
+    , {
+        imgUrl:"https://images.pexels.com/photos/1382732/pexels-photo-1382732.jpeg?auto=compress&cs=tinysrgb&w=400",
+        title:"Because it must be assumed that the truth or something",
+        date: "Mon, July 17"
+    }
 ]

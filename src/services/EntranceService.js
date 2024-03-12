@@ -88,7 +88,7 @@ const EntranceService = {
     }
   },
 
-  async createVisitRequest(visitorRequest) {
+  async VisitorRequest(visitorRequest) {
     try {
       return await axios.post(`${BASE_URL}/visitor/register`, visitorRequest);
     } catch (error) {

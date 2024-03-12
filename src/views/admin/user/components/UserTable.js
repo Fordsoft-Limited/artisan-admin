@@ -1,4 +1,3 @@
-import axios from "axios";
 
 import {
   Flex,
@@ -35,21 +34,17 @@ import {
 
 // Custom components
 import Card from "components/card/Card";
-import Upload from "./Upload";
-import AdminService from "services/AdminService";
-import APP_CONSTANT from "utils/Constant";
+
+import APP_CONSTANT from '../../../../utils/Constant'
+import AdminService from '../../../../services/AdminService'
+import ConversationService from "services/ConversatonService";
 
 export default function Users(props) {
   const { columnsData } = props;
-  const [tableData, setTableData] = useState([])
+  const [tableData, setTableData] = useState([]);
   const columns = useMemo(() => columnsData, [columnsData]);
   const data = useMemo(() => tableData, [tableData]);
-
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
-  };
+  const [checked, setChecked] = useState(false);
 
   const tableInstance = useTable(
     {
@@ -95,24 +90,62 @@ export default function Users(props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [formData, setFormData] = useState({
     name: "",
-    address: "",
-    phone: "",
-    description: "",
+    email: "",
+    phone: ""
   });
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
+  };
+  const sendInvitation = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await AdminService.sendInvitationToUser(formData)
+      if(response.data['message']===APP_CONSTANT.messageSuccess){
+        setSuccessMessage(response.data['data'])
+        await fetchUserData() // fetch the data again
+        setFormData({name:'', email:'', phone:''}) // clear form field
+      }else{
+        setErrorMessage(response.data['data'])
+      }
+    } catch (error) {
+      setErrorMessage(error?.response?.data['data']);
+    }
+  };
 
   const fetchUserData = async () => {
     try {
-      const response = await AdminService.getPaginatedUsers(APP_CONSTANT.defaultPage, APP_CONSTANT.defaultSize); // Call the function with page and limit
-      setTableData(response.data['data'])
+      const response = await AdminService.getPaginatedUsers(
+        APP_CONSTANT.defaultPage,
+        APP_CONSTANT.defaultSize
+      ); // Call the function with page and limit
+      setTableData(response.data["data"]);
     } catch (error) {
-      console.error('Error fetching users:', error);
+      console.error("Error fetching users:", error);
     }
   };
+
+  const deleteUser= async(userId)=>{
+try{
+  const prompt = window.confirm("Are you sure to delete the selected record")
+  if(prompt){
+    const deleteResponse = await ConversationService.deleteUser(userId)
+    if(deleteResponse.data['message']===APP_CONSTANT.messageSuccess){
+      fetchUserData()
+    }
+  }
+}catch(error){
+  console.error('Error fetching users:', error);
+}
+  }
 
   useEffect(() => {
     fetchUserData();
   }, []);
-  
+
   return (
     <Card
       direction="column"
@@ -137,12 +170,6 @@ export default function Users(props) {
             onClick={onOpen}
           >
             Add
-          </Button>
-          <Button colorScheme="green" variant="outline" fontSize="16px">
-            Edit
-          </Button>
-          <Button colorScheme="red" variant="outline" fontSize="16px">
-            Delete
           </Button>
         </Flex>
       </Flex>
@@ -181,9 +208,11 @@ export default function Users(props) {
                     data = (
                       <Flex align="center">
                         <Checkbox
-                          defaultChecked={cell.value[1]}
+                          id="remember-login"
                           colorScheme="brandScheme"
+                          checked={checked}
                           me="10px"
+                          onChange={(e) => setChecked(e.target.checked)}
                         />
                         <Text color={textColor} fontSize="sm" fontWeight="700">
                           {cell.value}
@@ -202,12 +231,19 @@ export default function Users(props) {
                         {cell.value}
                       </Text>
                     );
-                  }
-                  else if (cell.column.Header === "STATUS") {
+                  } else if (cell.column.Header === "STATUS") {
                     data = (
                       <Text color={textColor} fontSize="sm" fontWeight="700">
-                        {cell.value?'Active':'Inactive'}
+                        {cell.value ? "Active" : "Inactive"}
                       </Text>
+                    );
+                  } else {
+                    data = (
+                      <Flex gap="5px">
+                    <Button colorScheme="red" variant="outline" fontSize="10px" onClick={() => deleteUser(cell.value)}>
+                      Delete
+                    </Button>
+                      </Flex>
                     );
                   }
                   return (
@@ -340,54 +376,79 @@ export default function Users(props) {
       <Modal isOpen={isOpen} onClose={onClose} size="lg">
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Send New Invitation</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <Upload />
-            <Box w="100%">
-              <Flex gap="20px" mb="12px">
-                <Input
-                  value={formData.name}
-                  variant="outline"
-                  placeholder="Name"
-                  name="name"
-                  w="100%"
-                  onChange={handleInputChange}
-                />
-                <Input
-                  value={formData.address}
-                  variant="outline"
-                  placeholder="Address"
-                  name="address"
-                  w="100%"
-                  onChange={handleInputChange}
-                />
-              </Flex>
-              <Flex gap="20px" mb="12px">
-                <Input
-                  value={formData.phone}
-                  variant="outline"
-                  name="phone"
-                  type="tel"
-                  placeholder="Phone number"
-                  w="100%"
-                  onChange={handleInputChange}
-                />
-              </Flex>
-              <Flex>
-                <Textarea
-                  value={formData.description}
-                  name="description"
-                  onChange={handleInputChange}
-                  placeholder="Description"
-                />
-              </Flex>
-            </Box>
-          </ModalBody>
+          <form onSubmit={sendInvitation}>
+            <ModalHeader>Send New Invitation</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
+              <Box w="100%">
+                <Flex gap="20px" mb="12px">
+                  <Input
+                    value={formData.name}
+                    variant="outline"
+                    placeholder="Name"
+                    name="name"
+                    w="100%"
+                    onChange={handleInputChange}
+                  />
+                  <Input
+                    value={formData.email}
+                    variant="outline"
+                    placeholder="Email Address"
+                    name="email"
+                    type="email"
+                    w="100%"
+                    onChange={handleInputChange}
+                  />
+                </Flex>
+                <Flex gap="20px" mb="12px">
+                  <Input
+                    value={formData.phone}
+                    variant="outline"
+                    name="phone"
+                    type="tel"
+                    placeholder="Phone number"
+                    w="100%"
+                    onChange={handleInputChange}
+                  />
+                </Flex>
+                <Flex>
+                  {errorMessage && (
+                    <Text
+                      mb="36px"
+                      ms="4px"
+                      color={"red.500"}
+                      fontWeight="400"
+                      fontSize="md"
+                      w="100%"
+                    >
+                      {errorMessage}
+                    </Text>
+                  )}
+                </Flex>
 
-          <ModalFooter>
-            <Button variant="ghost">Send Invite</Button>
-          </ModalFooter>
+                <Flex>
+                  {successMessage && (
+                    <Text
+                      mb="36px"
+                      ms="4px"
+                      color={"green.400"}
+                      fontWeight="400"
+                      fontSize="md"
+                      w="100%"
+                    >
+                      {successMessage}
+                    </Text>
+                  )}
+                </Flex>
+              </Box>
+            </ModalBody>
+
+            <ModalFooter>
+              <Button variant="ghost" type="submit">
+                Send Invite
+              </Button>
+            </ModalFooter>
+          </form>
         </ModalContent>
       </Modal>
     </Card>

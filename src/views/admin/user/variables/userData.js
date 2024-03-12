@@ -16,5 +16,9 @@ export const userDataColumns = [
     Header: "STATUS",
     accessor: "isActive",
   },
+  {
+    Header: "ACTION",
+    accessor: "id",
+  },
   
 ];

@@ -32,11 +32,7 @@ const AdminService = {
   },
 
   async sendInvitationToUser(data) {
-    try {
       return await axiosInstance.post(`${BASE_URL}/user/send/invitation`, data);
-    } catch (error) {
-      throw error;
-    }
   },
 };
 

@@ -24,7 +24,7 @@ import {
     useDisclosure,
     useColorModeValue,
 } from "@chakra-ui/react";
-import React, { useMemo } from "react";
+import React, { useMemo,useState } from "react";
 import {
     useGlobalFilter,
     usePagination,
@@ -41,6 +41,7 @@ export default function CheckTable(props) {
 
     const columns = useMemo(() => columnsData, [columnsData]);
     const data = useMemo(() => tableData, [tableData]);
+  const [checked, setChecked] = useState(false);
 
     const tableInstance = useTable(
         {
@@ -65,6 +66,15 @@ export default function CheckTable(props) {
     const textColor = useColorModeValue("secondaryGray.900", "white");
     const borderColor = useColorModeValue("gray.200", "whiteAlpha.100");
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const [isLoading, setIsLoading] = useState(false);
+const handleClick = () => {
+  setIsLoading(true);
+
+
+  setTimeout(() => {
+    setIsLoading(false);
+  }, 2000);
+};
     return (
         <Card
             direction='column'
@@ -82,7 +92,8 @@ export default function CheckTable(props) {
                 <Flex gap='10px'>
                     <Button colorScheme='purple' variant='outline' fontSize='16px' onClick={onOpen}>Add</Button>
                     <Button colorScheme='green' variant='outline' fontSize='16px'>Edit</Button>
-                    <Button colorScheme='red' variant='outline' fontSize='16px'>Delete</Button>
+                    <Button colorScheme='red' variant='outline' fontSize='16px' onClick={handleClick}
+    isLoading={isLoading}>Delete</Button>
                 </Flex>
             </Flex>
             <Table {...getTableProps()} variant='simple' color='gray.500' mb='24px'>
@@ -116,19 +127,23 @@ export default function CheckTable(props) {
                                     let data = "";
                                     if (cell.column.Header === "LOGO") {
                                         data = (
-                                            <Flex align='center'>
-                                                <Checkbox
-                                                    defaultChecked={cell.value[1]}
-                                                    colorScheme='brandScheme'
-                                                    me='10px'
-                                                />
-                                                <Image
-                                                    borderRadius='full'
-                                                    boxSize='50px'
-                                                    src={cell.value}
-                                                    alt='Dan Abramov'
-                                                />
-                                            </Flex>
+                                          <Flex align="center">
+                                            <Checkbox
+                                              id="remember-login"
+                                              colorScheme="brandScheme"
+                                              checked={checked}
+                                              me="10px"
+                                              onChange={(e) =>
+                                                setChecked(e.target.checked)
+                                              }
+                                            />
+                                            <Image
+                                              borderRadius="full"
+                                              boxSize="50px"
+                                              src={cell.value}
+                                              alt="Dan Abramov"
+                                            />
+                                          </Flex>
                                         );
                                     } else if (cell.column.Header === "NAME") {
                                         data = (
@@ -208,7 +223,8 @@ export default function CheckTable(props) {
                         <Button colorScheme='blue' mr={3} onClick={onClose}>
                             Close
                         </Button>
-                        <Button variant='ghost'>Add</Button>
+                        <Button variant='ghost' onClick={handleClick}
+    isLoading={isLoading}>Add</Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import Card from "components/card/Card";
 import { Text, Stack, Flex, Icon, Link, Button, StackDivider, Box } from '@chakra-ui/react'
 import { CiFlag1 } from "react-icons/ci";
@@ -8,6 +8,16 @@ import { FcReading } from "react-icons/fc";
 import { FaSave } from "react-icons/fa";
 import { MdOutlinePublishedWithChanges } from "react-icons/md";
 export default function Action() {
+    const [isLoading, setIsLoading] = useState(false);
+    const handleClick = () => {
+      setIsLoading(true);
+    
+    
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 2000);
+    };
+
     return (
         <Card mb="50px">
             <Box mb="10px">
@@ -52,10 +62,12 @@ export default function Action() {
                 </Box>
             </Box>
             <Box display="flex" justifyContent="space-between" mb={{base: '10px' ,md: '80px'}}>
-                <Button leftIcon={<FaSave />} colorScheme='blue' variant='outline'>
+                <Button leftIcon={<FaSave />} colorScheme='blue' variant='outline' onClick={handleClick}
+    isLoading={isLoading}>
                     Save as Draft
                 </Button>
-                <Button leftIcon={<MdOutlinePublishedWithChanges />} colorScheme='blue' variant='solid'>
+                <Button leftIcon={<MdOutlinePublishedWithChanges />} colorScheme='blue' variant='solid' onClick={handleClick}
+    isLoading={isLoading}>
                     Publish
                 </Button>
             </Box>

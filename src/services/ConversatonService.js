@@ -62,6 +62,9 @@ const ConversationService = {
       throw error;
     }
   },
+  async deleteUser(id) {
+      return await axiosInstance.delete(`${BASE_URL}/user/delete/${id}`);
+  },
 
   async deleteArtisan(id) {
     try {

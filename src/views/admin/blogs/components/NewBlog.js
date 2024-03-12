@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
     Flex,
     Image,
@@ -25,6 +25,15 @@ import Action from "./Action";
 import Categories from "./Categories";
 export default function NewBlog() {
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const [isLoading, setIsLoading] = useState(false);
+const handleClick = () => {
+  setIsLoading(true);
+
+
+  setTimeout(() => {
+    setIsLoading(false);
+  }, 2000);
+};
     return (
         <Box>
              <Button colorScheme='purple' variant='outline' fontSize='16px' onClick={onOpen}>NEW BLOG</Button>
@@ -52,7 +61,7 @@ export default function NewBlog() {
                         <Button colorScheme='blue' mr={3} onClick={onClose}>
                             Close
                         </Button>
-                        <Button variant='ghost'>Add</Button>
+                        <Button variant='ghost' onClick={handleClick} isLoading={isLoading}>Add</Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>

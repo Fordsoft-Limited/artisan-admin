@@ -137,7 +137,7 @@ function SignIn() {
   <Text
     mb='36px'
     ms='4px'
-    color={textColorSecondary}
+    color={'red.500'}
     fontWeight='400'
     fontSize='md'
   >
