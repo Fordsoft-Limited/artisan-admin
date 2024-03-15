@@ -23,7 +23,7 @@ export default function NewArtisan() {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-
+  const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -40,15 +40,68 @@ export default function NewArtisan() {
 
   const handleFileChange = (file) => {
     setFormData({ ...formData, file: file });
+    // Clear the error message when the user starts typing again
+    setErrors((prevErrors) => ({ ...prevErrors, [file]: "" }));
   };
 
   const handleContentChange = (field, value) => {
     setFormData({ ...formData, [field]: value });
+    // Clear the error message when the user starts typing again
+    setErrors((prevErrors) => ({ ...prevErrors, [field]: "" }));
   };
 
+const validateForm = () => {
+  let valid = true;
+  const newErrors = {};
+
+  // Perform validation for each field
+  if (!formData.name.trim()) {
+    newErrors.name = "Name is required";
+    valid = false;
+  }
+
+  // Validation for the "Email" field
+  if (!formData.email.trim()) {
+    newErrors.email = "Email is required";
+    valid = false;
+  } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+    newErrors.email = "Email is invalid";
+    valid = false;
+  }
+
+  if (!formData.phone.trim()) {
+    newErrors.phone = "Phone is required";
+    valid = false;
+  } else if (!/^\d+$/.test(formData.phone)) {
+    newErrors.phone = "Phone must contain only digits";
+    valid = false;
+  }
+
+  // Perform city for each field
+  if (!formData.city.trim()) {
+    newErrors.city = "City name is required";
+    valid = false;
+  }
+
+  // Perform street for each field
+  if (!formData.street.trim()) {
+    newErrors.street = "Street name is required";
+    valid = false;
+  }
+  // Perform Business type for each field
+  if (!formData.businessType.trim()) {
+    newErrors.businessType = "Business type is required";
+    valid = false;
+  }
+
+  setErrors(newErrors);
+  return valid;
+}
+
   const refreshArtisan = () => {};
+
   const handleSubmit = async () => {
-    console.log(formData);
+     if (validateForm()) {
     try {
       if (!formData) {
         setErrorMessage("Form field must be empty");
@@ -84,6 +137,7 @@ export default function NewArtisan() {
       setIsLoading(false);
       setErrorMessage(error?.response?.data["data"]);
     }
+  }
   };
 
   return (
@@ -138,6 +192,7 @@ export default function NewArtisan() {
                     onContentChange={handleContentChange}
                     formData={formData}
                     onFileChange={handleFileChange}
+                    errors={errors}
                   />
                 </div>
               </div>

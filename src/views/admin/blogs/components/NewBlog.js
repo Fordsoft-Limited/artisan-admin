@@ -23,6 +23,7 @@ export default function NewBlog() {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+
   const [formData, setFormData] = useState({
     title: "",
     file: null,
@@ -32,15 +33,21 @@ export default function NewBlog() {
   const handleContentChange = (field, value) => {
     console.log("We received a file::::", field);
     setFormData({ ...formData, [field]: value });
+    
   };
 
   const handleFileChange = (file) => {
     console.log("Selected file:", file);
     setFormData({ ...formData, file: file });
+   
   };
+
+
+  
+
   const refreshBlog = () => {};
   const handleSubmit = async () => {
-    console.log(formData)
+   
     try {
       if (!formData.title.trim() || !formData.content.trim()) {
         setErrorMessage("Title/content should not be empty");
@@ -62,6 +69,7 @@ export default function NewBlog() {
       setIsLoading(false);
       setErrorMessage(error?.response?.data["data"]);
     }
+  
   };
 
   return (

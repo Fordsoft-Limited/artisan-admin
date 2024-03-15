@@ -23,7 +23,7 @@ import "assets/css/quill.css";
 import UploadBlog from "./UploadBlog";
 import Upload from "../../profile/components/Upload";
 import Card from "components/card/Card";
-function Editor({ formData, onContentChange, onFileChange }) {
+function Editor({ formData, onContentChange, onFileChange, }) {
   const handleEditorChange = (content) => {
     onContentChange("content", content);
   };

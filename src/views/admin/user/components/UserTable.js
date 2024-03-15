@@ -84,6 +84,8 @@ export default function Users(props) {
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const borderColor = useColorModeValue("gray.200", "whiteAlpha.100");
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [errors, setErrors] = useState({});
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -95,9 +97,45 @@ export default function Users(props) {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
+    // Clear the error message when the user starts typing again
+    setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
   };
+
+  const validateForm = () => {
+    let valid = true;
+    const newErrors = {};
+
+    // Perform validation for each field
+    if (!formData.name.trim()) {
+      newErrors.name = "Name is required";
+      valid = false;
+    }
+
+    // Validation for the "Email" field
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required";
+      valid = false;
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = "Email is invalid";
+      valid = false;
+    }
+
+    // Validation for the "Phone" field
+    if (!formData.phone.trim()) {
+      newErrors.phone = "Phone is required";
+      valid = false;
+    } else if (!/^\d+$/.test(formData.phone)) {
+      newErrors.phone = "Phone must contain only digits";
+      valid = false;
+    }
+
+    setErrors(newErrors);
+    return valid;
+  };
+
   const sendInvitation = async (e) => {
     e.preventDefault();
+    if (validateForm()) {
     try {
       const response = await AdminService.sendInvitationToUser(formData);
       if (response.data["statusCode"] === APP_CONSTANT.successCode) {
@@ -111,6 +149,7 @@ export default function Users(props) {
       console.log(error?.response?.data["data"]);
       setErrorMessage(error?.response?.data["data"]);
     }
+  }
   };
 
   const fetchUserData = async () => {
@@ -330,7 +369,6 @@ export default function Users(props) {
             ))}
           </Select>
         </Box>
-        
       </div>
 
       <Modal isOpen={isOpen} onClose={onClose} size="lg">
@@ -341,36 +379,50 @@ export default function Users(props) {
             <ModalCloseButton />
             <ModalBody>
               <Box w="100%">
-                <Flex gap="20px" mb="12px">
-                  <Input
-                    value={formData.name}
-                    variant="outline"
-                    placeholder="Name"
-                    name="name"
-                    w="100%"
-                    onChange={handleInputChange}
-                  />
-                  <Input
-                    value={formData.email}
-                    variant="outline"
-                    placeholder="Email Address"
-                    name="email"
-                    type="email"
-                    w="100%"
-                    onChange={handleInputChange}
-                  />
+                <Flex flexDirection="column">
+                  <Flex flexDirection="column" mb="12px">
+                    <Input
+                      value={formData.name}
+                      variant="outline"
+                      placeholder="Name"
+                      name="name"
+                      w="100%"
+                      onChange={handleInputChange}
+                    />
+                    {errors.name && (
+                      <div style={{ color: "#ff0000" }}>{errors.name}</div>
+                    )}
+                  </Flex>
+                  <Flex flexDirection="column" mb="12px">
+                    <Input
+                      value={formData.email}
+                      variant="outline"
+                      placeholder="Email Address"
+                      name="email"
+                      type="email"
+                      w="100%"
+                      onChange={handleInputChange}
+                    />
+                    {errors.email && (
+                      <div style={{ color: "#ff0000" }}>{errors.email}</div>
+                    )}
+                  </Flex>
+                  <Flex flexDirection="column" mb="12px">
+                    <Input
+                      value={formData.phone}
+                      variant="outline"
+                      name="phone"
+                      type="number"
+                      placeholder="Phone number"
+                      w="100%"
+                      onChange={handleInputChange}
+                    />
+                    {errors.phone && (
+                      <div style={{ color: "#ff0000" }}>{errors.phone}</div>
+                    )}
+                  </Flex>
                 </Flex>
-                <Flex gap="20px" mb="12px">
-                  <Input
-                    value={formData.phone}
-                    variant="outline"
-                    name="phone"
-                    type="tel"
-                    placeholder="Phone number"
-                    w="100%"
-                    onChange={handleInputChange}
-                  />
-                </Flex>
+
                 <Flex>
                   {errorMessage && (
                     <Text
