@@ -1,5 +1,3 @@
-import axios from "axios";
-
 import {
   Flex,
   Table,
@@ -14,7 +12,6 @@ import {
   Input,
   Button,
   Modal,
-  Textarea,
   ModalOverlay,
   ModalContent,
   ModalHeader,
@@ -35,9 +32,9 @@ import {
 
 // Custom components
 import Card from "components/card/Card";
-import Upload from "./Upload";
 import AdminService from "services/AdminService";
 import APP_CONSTANT from "utils/Constant";
+import ConversationService from "services/ConversatonService";
 
 export default function Users(props) {
   const { columnsData } = props;
@@ -89,7 +86,7 @@ export default function Users(props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [formData, setFormData] = useState({
     name: "",
-    address: "",
+    email: "",
     phone: "",
   });
   const [errorMessage, setErrorMessage] = useState("");
@@ -123,6 +120,22 @@ export default function Users(props) {
         APP_CONSTANT.defaultSize
       ); // Call the function with page and limit
       setTableData(response.data["data"]);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
+  };
+
+  const deleteUser = async (userId) => {
+    try {
+      const prompt = window.confirm(
+        "Are you sure to delete the selected record"
+      );
+      if (prompt) {
+        const deleteResponse = await ConversationService.deleteUser(userId);
+        if (deleteResponse.data["message"] === APP_CONSTANT.messageSuccess) {
+          fetchUserData();
+        }
+      }
     } catch (error) {
       console.error("Error fetching users:", error);
     }
@@ -317,48 +330,7 @@ export default function Users(props) {
             ))}
           </Select>
         </Box>
-        {/* <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-                    {"<<"}
-                </button>{" "}
-                <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-                    {"<"}
-                </button>{" "}
-                <button onClick={() => nextPage()} disabled={!canNextPage}>
-                    {">"}
-                </button>{" "}
-                <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-                    {">>"}
-                </button>{" "}
-                <span>
-                    Page{" "}
-                    <strong>
-                        {pageIndex + 1} of {pageOptions.length}
-                    </strong>{" "}
-                </span>
-                <span>
-                    | Go to page:{" "}
-                    <input
-                        type="number"
-                        defaultValue={pageIndex + 1}
-                        onChange={(e) => {
-                            const page = e.target.value ? Number(e.target.value) - 1 : 0;
-                            gotoPage(page);
-                        }}
-                        style={{ width: "100px" }}
-                    />
-                </span>{" "}
-                <select
-                    value={pageSize}
-                    onChange={(e) => {
-                        setPageSize(Number(e.target.value));
-                    }}
-                >
-                    {[10, 20, 30, 40, 50].map((pageSize) => (
-                        <option key={pageSize} value={pageSize}>
-                            Show {pageSize}
-                        </option>
-                    ))}
-                </select> */}
+        
       </div>
 
       <Modal isOpen={isOpen} onClose={onClose} size="lg">

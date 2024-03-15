@@ -13,47 +13,69 @@ import {
   ModalCloseButton,
   useDisclosure,
 } from "@chakra-ui/react";
-import APP_CONSTANT from "utils/Constant";
+import ConversationService from "../../../../services/ConversatonService";
+import APP_CONSTANT from "../../../../utils/Constant";
 
 import Editor from "./Editor";
-import ConversationService from "services/ConversatonService";
 
-export default function NewBlog() {
+export default function NewArtisan() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+
   const [formData, setFormData] = useState({
-    title: "",
-    file: null,
-    content: "", // Add content field
+    name: "",
+    email: "",
+    phone: "",
+    businessName: "",
+    businessType: "",
+    websiteLink: "",
+    street: "",
+    city: "",
+    postalCode: "",
+    serviceDescription: "",
+    file: null
   });
 
+  const handleFileChange = (file) => {
+    setFormData({ ...formData, file: file });
+  };
+
   const handleContentChange = (field, value) => {
-    console.log("We received a file::::", field);
     setFormData({ ...formData, [field]: value });
   };
 
-  const handleFileChange = (file) => {
-    console.log("Selected file:", file);
-    setFormData({ ...formData, file: file });
-  };
-  const refreshBlog = () => {};
+  const refreshArtisan = () => {};
   const handleSubmit = async () => {
-    console.log(formData)
+    console.log(formData);
     try {
-      if (!formData.title.trim() || !formData.content.trim()) {
-        setErrorMessage("Title/content should not be empty");
+      if (!formData) {
+        setErrorMessage("Form field must be empty");
         return;
       }
       setIsLoading(true);
-      const response = await ConversationService.addBlogWithAttachment(
+      const response = await ConversationService.addArtisan(
         formData
       );
       if (response.data["message"] === APP_CONSTANT.messageSuccess) {
         setSuccessMessage(response.data["data"]);
-        await refreshBlog(); // fetch the data again
-        setFormData({ title: "", content: "", file: null }); // clear form field
+        await refreshArtisan();
+        // fetch the data again
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          businessName: "",
+          websiteLink: "",
+          businessType: "",
+          category: "",
+          serviceDescription: "",
+          street: "",
+          city: "",
+          file: null,
+          postalCode: "",
+        }); // clear form field
       } else {
         setErrorMessage(response.data["data"]);
       }
@@ -72,12 +94,12 @@ export default function NewBlog() {
         fontSize="16px"
         onClick={onOpen}
       >
-        NEW BLOG
+        NEW Artisan
       </Button>
       <Modal isOpen={isOpen} onClose={onClose} size="lg">
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>New blog post</ModalHeader>
+          <ModalHeader>New Artisan</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <Flex>
@@ -124,10 +146,10 @@ export default function NewBlog() {
           <ModalFooter>
             <Button
               variant="ghost"
-              onClick={handleSubmit}
               isLoading={isLoading}
+              onClick={handleSubmit}
             >
-              Post blog
+              Add Artisan
             </Button>
           </ModalFooter>
         </ModalContent>

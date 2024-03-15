@@ -9,7 +9,9 @@ import {
     Tr,
     useColorModeValue,
   } from "@chakra-ui/react";
-  import React, { useMemo } from "react";
+  import React, { useMemo, useState, useEffect } from "react";
+  import AdminService from "../../../../services/AdminService";
+  import APP_CONSTANT from "../../../../utils/Constant"
   import {
     useGlobalFilter,
     usePagination,
@@ -21,11 +23,29 @@ import {
   import Card from "components/card/Card";
   import Menu from "components/menu/MainMenu";
   export default function VistorsTable(props) {
-    const { columnsData, tableData } = props;
-  
+    const { columnsData } = props;
+      const [tableData, setTableData ] = useState([])
+
     const columns = useMemo(() => columnsData, [columnsData]);
     const data = useMemo(() => tableData, [tableData]);
   
+    const fetchVisitosData = async () => {
+      try {
+        const response = await AdminService.getPaginatedVisitors(
+          APP_CONSTANT.defaultPage,
+          APP_CONSTANT.defaultSize
+        ); // Call the function with page and limit
+        setTableData(response.data["data"]);
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
+    };
+
+    useEffect(() => {
+      fetchVisitosData();
+    }, []);
+
+
     const tableInstance = useTable(
       {
         columns,

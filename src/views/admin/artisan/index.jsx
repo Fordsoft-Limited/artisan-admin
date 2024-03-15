@@ -1,23 +1,24 @@
 import React from "react";
 import { Box, SimpleGrid } from "@chakra-ui/react";
-
-import ArtisanTable from "./components/ArtisanTable";
-import { artisanDataColumns } from "./variables/artisanData";
-import tableDataArtisan from "./variables/tableDataArtisan.json"; 
-export default function Artisan() {
+import NewArtisan from "./components/NewArtisan";
+import { ArtisanData } from "./variables/ArtisanData";
+import RecentArtisan from "./components/RecentArtisan";
+export default function Advert() {
   return (
-    <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
-      <SimpleGrid
-        mb="20px"
-        columns={{ sm: 1, md: 1 }}
-        spacing={{ base: "20px", xl: "20px" }}
-      >
-        <ArtisanTable
-          columnsData={artisanDataColumns}
-          tableData={tableDataArtisan}
-          
-        />
-      </SimpleGrid>
+    <Box mt="100px">
+      <NewArtisan />
+      <Box mt="20px">
+        <SimpleGrid columns={{ base: 1, md: 3, xl: 3 }} gap="20px" mb="20px">
+          {ArtisanData.map((item, index) => (
+            <RecentArtisan
+              businessName={item.businessName}
+              imgUrl={item.imgUrl}
+              date={item.date}
+              key={item.businessName + index}
+            />
+          ))}
+        </SimpleGrid>
+      </Box>
     </Box>
   );
 }
