@@ -1,32 +1,7 @@
 import React, { useState } from "react";
-import {
-  Flex,
-  Image,
-  Checkbox,
-  Tbody,
-  Td,
-  Text,
-  Th,
-  Thead,
-  Tr,
-  Input,
-  Button,
-  Modal,
-  FormControl,
-  Textarea,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  Box,
-  ModalCloseButton,
-  useDisclosure,
-  SimpleGrid,
-} from "@chakra-ui/react";
+import { Image, Button, Box } from "@chakra-ui/react";
 import "assets/css/blog.css";
-
-export default function RecentBlog({ imgUrl, title, date }) {
+export default function RecentArtisan({ imgUrl, businessName, date}) {
   const [isLoading, setIsLoading] = useState(false);
   const handleClick = () => {
     setIsLoading(true);
@@ -35,8 +10,6 @@ export default function RecentBlog({ imgUrl, title, date }) {
       setIsLoading(false);
     }, 2000);
   };
-
- 
   return (
     <Box className="recent-blog-posts">
       {/* <SimpleGrid columns={{ base: 1, md: 3, xl: 3 }} gap="20px" mb="20px"> */}
@@ -45,11 +18,7 @@ export default function RecentBlog({ imgUrl, title, date }) {
           <Image src={imgUrl} className="img-fluid" alt="" />
         </div>
         <span className="post-date">{date}</span>
-        <h3 className="post-title">{title}</h3>
-        <a href="blog-single.html" className="readmore stretched-link mt-auto">
-          <span>Read More</span>
-          <i className="bi bi-arrow-right"></i>
-        </a>
+        <h3 className="post-title">{businessName}</h3>
         <Box
           display="flex"
           justifyContent="space-between"
@@ -69,7 +38,6 @@ export default function RecentBlog({ imgUrl, title, date }) {
             colorScheme="red"
             variant="outline"
             fontSize="16px"
-            onClick={handleClick}
             isLoading={isLoading}
           >
             Delete

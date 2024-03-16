@@ -1,19 +1,19 @@
 export const columnsDataColumns = [
     {
       Header: "NAME",
-      accessor: "name",
+      accessor: "contact.name",
     },
     {
       Header: "EMAIL",
-      accessor: "email",
+      accessor: "contact.email",
     },
     {
       Header: "TELEPHONE",
-      accessor: "telephone",
+      accessor: "contact.phone",
     },
     {
       Header: "DATE",
-      accessor: "date",
+      accessor: "contact.date",
     },
   ];
   
