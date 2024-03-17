@@ -4,7 +4,15 @@ import { Text, Stack, Flex, Icon, Link, Button, StackDivider, Box, VStack, Switc
 import { HSeparator } from "components/separator/Separator";
 import { FaChevronRight } from "react-icons/fa";
 import { FaPowerOff } from "react-icons/fa";
+import { useHistory } from "react-router-dom";
+import LocalStorageService from "services/LocalStorageService";
+
 export default function Account() {
+    const history = useHistory();
+    const logout=()=>{
+        LocalStorageService.logout()
+        history.push("/auth");
+    }
     return (
         <Card w="100%" mt="100px" >
             <Box mb="20px">
@@ -54,7 +62,7 @@ export default function Account() {
             </Box>
 
             <Box display='flex' justifyContent='center'>
-                <Button leftIcon={<FaPowerOff />} colorScheme='red' variant='outline'>
+                <Button leftIcon={<FaPowerOff />} colorScheme='red' variant='outline' onClick={logout}>
                     Logout
                 </Button>
             </Box>

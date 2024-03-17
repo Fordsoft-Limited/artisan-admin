@@ -8,6 +8,7 @@ import RtlLayout from 'layouts/rtl';
 import { ChakraProvider } from '@chakra-ui/react';
 import theme from 'theme/theme';
 import { ThemeEditorProvider } from '@hypertheme-editor/chakra-ui';
+import withAdminProtection from 'views/guard/AuthGuard';
 
 ReactDOM.render(
 	<ChakraProvider theme={theme}>
@@ -16,7 +17,7 @@ ReactDOM.render(
 				<HashRouter>
 					<Switch>
 						<Route path={`/auth`} component={AuthLayout} />
-						<Route path={`/admin`} component={AdminLayout} />
+						<Route path={`/admin`} component={withAdminProtection(AdminLayout)} />
 						<Route path={`/rtl`} component={RtlLayout} />
 						<Redirect from='/' to='/auth' />
 					</Switch>

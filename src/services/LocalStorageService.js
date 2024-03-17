@@ -11,6 +11,9 @@ const LocalStorageService = {
             return value ? JSON.parse(value) : null;
     },
   
+    logout:()=>{
+    localStorage.removeItem('authData')
+    },
     // Method to get token from localStorage
     getToken: () => {
       const authData = LocalStorageService.get('authData');
