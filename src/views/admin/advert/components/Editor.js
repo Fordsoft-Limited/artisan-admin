@@ -1,117 +1,145 @@
 import React from "react";
 import {
-  Flex,
+  Grid,
+  GridItem,
   Input,
   FormControl,
   FormLabel,
 } from "@chakra-ui/react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import "assets/css/quill.css";
 import UploadArtisan from "./UploadArtisan";
 import Card from "components/card/Card";
-function Editor({ formData, onContentChange, onFileChange }) {
-  const handleEditorChange = (content) => {
-    onContentChange("content", content);
+
+function Editor({ formData, onContentChange, onFileChange, errors }) {
+  const handleEditorChange = (description) => {
+    onContentChange("description", description);
   };
 
   return (
     <Card mb="12px">
       <FormControl className="add-new-post">
         <FormLabel>Advertisement title</FormLabel>
-        <Flex gap="20px" mb="12px">
-          <Input
-            type="text"
-            required="required"
-            placeholder="enter your name*"
-            mb="10px"
-            value={formData.name}
-            onChange={(e) => onContentChange("name", e.target.value)}
-          />
 
-          <Input
-            type="text"
-            required="required"
-            placeholder="enter your email*"
-            mb="10px"
-            value={formData.email}
-            onChange={(e) => onContentChange("email", e.target.value)}
-          />
-        </Flex>
-        <Flex gap="20px" mb="12px">
-          <Input
-            type="text"
-            required="required"
-            placeholder="enter your phone No*:"
-            mb="10px"
-            value={formData.phone}
-            onChange={(e) => onContentChange("phone", e.target.value)}
-          />
-          <Input
-            type="text"
-            required="required"
-            placeholder="enter your businessname*"
-            mb="10px"
-            value={formData.businessname}
-            onChange={(e) => onContentChange("businessname", e.target.value)}
-          />
-        </Flex>
-
-        <Input
-          type="text"
-          required="required"
-          placeholder="enter your websiteLink"
-          mb="10px"
-          value={formData.websiteLink}
-          onChange={(e) => onContentChange("websiteLink", e.target.value)}
-        />
-        <Flex gap="20px" mb="12px">
-          <Input
-            type="text"
-            required="required"
-            placeholder="enter your Category*"
-            mb="10px"
-            value={formData.catgory}
-            onChange={(e) => onContentChange("category", e.target.value)}
-          />
-          <Input
-            type="text"
-            required="required"
-            placeholder="enter your street*"
-            mb="10px"
-            value={formData.street}
-            onChange={(e) => onContentChange("street", e.target.value)}
-          />
-        </Flex>
-        <Flex gap="20px" mb="12px">
-          <Input
-            type="text"
-            required="required"
-            placeholder="enter your city*"
-            mb="10px"
-            value={formData.city}
-            onChange={(e) => onContentChange("city", e.target.value)}
-          />
-          <Input
-            type="text"
-            required="required"
-            placeholder="enter your postal code"
-            mb="10px"
-            value={formData.postalCode}
-            onChange={(e) => onContentChange("postalCode", e.target.value)}
-          />
-        </Flex>
-        <UploadArtisan
-          title="Pick a file to upload*"
-          onFileChange={onFileChange}
-        />
-        <ReactQuill
-          className="add-new-post__editor mb-1"
-          value={formData.content}
-          placeholder="enter your content title*"
-          onChange={handleEditorChange}
-          required="required"
-        />
+        <Grid templateColumns="repeat(2, 1fr)" gap={6}>
+          <GridItem colSpan={1}>
+            <Input
+              type="text"
+              required
+              placeholder="Name"
+              value={formData.name}
+              onChange={(e) => onContentChange("name", e.target.value)}
+            />
+            {errors.name && (
+              <div style={{ color: "#ff0000" }}>{errors.name}</div>
+            )}
+          </GridItem>
+          <GridItem colSpan={1}>
+            <Input
+              type="text"
+              required
+              placeholder="Email"
+              value={formData.email}
+              onChange={(e) => onContentChange("email", e.target.value)}
+            />
+            {errors.email && (
+              <div style={{ color: "#ff0000" }}>{errors.email}</div>
+            )}
+          </GridItem>
+          <GridItem colSpan={1}>
+            <Input
+              type="text"
+              required
+              placeholder="Phone No:"
+              value={formData.phone}
+              onChange={(e) => onContentChange("phone", e.target.value)}
+            />
+            {errors.phone && (
+              <div style={{ color: "#ff0000" }}>{errors.phone}</div>
+            )}
+          </GridItem>
+          <GridItem colSpan={1}>
+            <Input
+              type="text"
+              required
+              placeholder="Business Name"
+              value={formData.businessName}
+              onChange={(e) => onContentChange("businessName", e.target.value)}
+            />
+            {errors.businessName && (
+              <div style={{ color: "#ff0000" }}>{errors.businessName}</div>
+            )}
+          </GridItem>
+          <GridItem colSpan={1}>
+            <Input
+              type="text"
+              required
+              placeholder="websiteLink"
+              value={formData.websiteLink}
+              onChange={(e) => onContentChange("websiteLink", e.target.value)}
+            />
+          </GridItem>
+          <GridItem colSpan={1}>
+            <Input
+              type="text"
+              required
+              placeholder="Category"
+              value={formData.category}
+              onChange={(e) => onContentChange("category", e.target.value)}
+            />
+            {errors.category && (
+              <div style={{ color: "#ff0000" }}>{errors.category}</div>
+            )}
+          </GridItem>
+          <GridItem colSpan={1}>
+            <Input
+              type="text"
+              required
+              placeholder="Street"
+              value={formData.street}
+              onChange={(e) => onContentChange("street", e.target.value)}
+            />
+            {errors.city && (
+              <div style={{ color: "#ff0000" }}>{errors.city}</div>
+            )}
+          </GridItem>
+          <GridItem colSpan={1}>
+            <Input
+              type="text"
+              required
+              placeholder="City"
+              value={formData.city}
+              onChange={(e) => onContentChange("city", e.target.value)}
+            />
+            {errors.city && (
+              <div style={{ color: "#ff0000" }}>{errors.city}</div>
+            )}
+          </GridItem>
+          <GridItem colSpan={1}>
+            <Input
+              type="text"
+              required
+              placeholder="Postal code"
+              value={formData.postalCode}
+              onChange={(e) => onContentChange("postalCode", e.target.value)}
+            />
+          </GridItem>
+          <GridItem colSpan={2}>
+            <UploadArtisan
+              title="Pick a file to upload"
+              onFileChange={onFileChange}
+            />
+          </GridItem>
+          <GridItem colSpan={2}>
+            <ReactQuill
+              className="add-new-post__editor mb-1"
+              value={formData.description}
+              placeholder="enter your content title*"
+              onChange={handleEditorChange}
+              required
+            />
+          </GridItem>
+        </Grid>
       </FormControl>
     </Card>
   );
