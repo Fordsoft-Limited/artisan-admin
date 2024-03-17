@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Image, Button, Box } from "@chakra-ui/react";
 import "assets/css/blog.css";
-export default function RecentArtisan({ imgUrl, businessName, date}) {
+export default function RecentArtisan({data, onDeleteEvent}) {
+  const{ businessType,id,websiteLink,serviceDescription, businessName, logo}=data
   const [isLoading, setIsLoading] = useState(false);
   const handleClick = () => {
     setIsLoading(true);
@@ -10,15 +11,18 @@ export default function RecentArtisan({ imgUrl, businessName, date}) {
       setIsLoading(false);
     }, 2000);
   };
+  const handleDelete =()=>{
+    onDeleteEvent(id)
+  }
   return (
     <Box className="recent-blog-posts">
       {/* <SimpleGrid columns={{ base: 1, md: 3, xl: 3 }} gap="20px" mb="20px"> */}
       <div className="post-box">
         <div className="post-img">
-          <Image src={imgUrl} className="img-fluid" alt="" />
+          <Image src={logo} className="img-fluid" alt="" />
         </div>
-        <span className="post-date">{date}</span>
-        <h3 className="post-title">{businessName}</h3>
+        <span className="post-date">{businessName}/{businessType}</span>
+        <h3 className="post-title">{serviceDescription}</h3>
         <Box
           display="flex"
           justifyContent="space-between"
@@ -38,6 +42,7 @@ export default function RecentArtisan({ imgUrl, businessName, date}) {
             colorScheme="red"
             variant="outline"
             fontSize="16px"
+            onClick={handleDelete}
             isLoading={isLoading}
           >
             Delete
