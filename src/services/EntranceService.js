@@ -13,7 +13,7 @@ const EntranceService = {
     });
   },
 
-  async listPaginatedAdvertisement(page, limit) {
+  async listPaginatedAdvert(page, limit) {
     return await axios.get(`${BASE_URL}/advsertisements`, {
       params: {
         page,

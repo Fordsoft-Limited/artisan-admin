@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Image, Button, Box } from "@chakra-ui/react";
 import "assets/css/blog.css";
 export default function RecentArtisan({data, onDeleteEvent}) {
-  const{ businessType,id,websiteLink,serviceDescription, businessName, logo}=data
+  const { businessType, id, serviceDescription, businessName, logo}=data
   const [isLoading, setIsLoading] = useState(false);
   const handleClick = () => {
     setIsLoading(true);
@@ -21,8 +21,10 @@ export default function RecentArtisan({data, onDeleteEvent}) {
         <div className="post-img">
           <Image src={logo} className="img-fluid" alt="" />
         </div>
-        <span className="post-date">{businessName}/{businessType}</span>
-        <h3 className="post-title">{serviceDescription}</h3>
+        <span className="post-date">
+          {businessName}/{businessType}
+        </span>
+        <div dangerouslySetInnerHTML={{ __html: serviceDescription }}></div>{" "}
         <Box
           display="flex"
           justifyContent="space-between"

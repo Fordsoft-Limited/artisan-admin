@@ -1,9 +1,8 @@
 import React, { useState,useEffect } from "react";
 import { Box, SimpleGrid } from "@chakra-ui/react";
 import NewArtisan from "./components/NewArtisan";
-import { ArtisanData } from "./variables/artisanData";
 import RecentArtisan from "./components/RecentArtisan";
-import EntranceService from "services/EntranceService";
+import EntranceService from "./../../../services/EntranceService";
 import ConversationService from "../../../services/ConversatonService";
 
 import APP_CONSTANT from "utils/Constant";

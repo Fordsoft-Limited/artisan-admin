@@ -244,11 +244,6 @@ export default function Users(props) {
                   if (cell.column.Header === "NAME") {
                     data = (
                       <Flex align="center">
-                        <Checkbox
-                          defaultChecked={cell.value[1]}
-                          colorScheme="brandScheme"
-                          me="10px"
-                        />
                         <Text color={textColor} fontSize="sm" fontWeight="700">
                           {cell.value}
                         </Text>

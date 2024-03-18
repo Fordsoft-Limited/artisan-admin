@@ -29,7 +29,7 @@ const ConversationService = {
           email: advertData.email,
           phone: advertData.phone,
           category: advertData.category,
-          description: advertData.content,
+          description: advertData.description,
           websiteLink: advertData.websiteLink,
           businessName: advertData.businessName,
           street: advertData.street,

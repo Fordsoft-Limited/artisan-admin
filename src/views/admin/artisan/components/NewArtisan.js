@@ -93,6 +93,11 @@ const validateForm = () => {
     newErrors.businessType = "Business type is required";
     valid = false;
   }
+  // Perform Business Name type for each field
+  if (!formData.businessName.trim()) {
+    newErrors.businessName = "Business name is required";
+    valid = false;
+  }
 
   setErrors(newErrors);
   return valid;

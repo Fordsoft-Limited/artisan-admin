@@ -3,7 +3,7 @@ import { useDropzone } from 'react-dropzone';
 import './style.css'; // Import the CSS file for styling
   import React,{useState}  from "react";
   
-  export default function UploadBlog({title,onFileChange, ...rest }) {
+  export default function UploadBlog({title, onFileChange, ...rest }) {
     const [uploadedFiles, setUploadedFiles] = useState([]);
 
     const handleDrop = (acceptedFiles) => {

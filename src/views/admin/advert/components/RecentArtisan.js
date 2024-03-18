@@ -5,9 +5,8 @@ import {
   Box,
 } from "@chakra-ui/react";
 import "assets/css/blog.css";
-import APP_CONSTANT from "utils/Constant";
-import ConversationService from "services/ConversatonService";
-export default function RecentArtisan({ imgUrl, businessName, date, id, refreshArtisan, }) {
+export default function RecentArtisan({ data, onDeleteEvent }) {
+  const { businessName, category, id, description, fileName } = data;
   const [isLoading, setIsLoading] = useState(false);
   const handleClick = () => {
     setIsLoading(true);
@@ -17,34 +16,23 @@ export default function RecentArtisan({ imgUrl, businessName, date, id, refreshA
     }, 2000);
   };
 
-
-  const deleteUser = async () => {
-    try {
-      const prompt = window.confirm(
-        "Are you sure you want to delete the selected record?"
-      );
-      if (prompt) {
-        const deleteResponse = await ConversationService.deleteAdvertisement(
-          id
-        );
-        if (deleteResponse.data["message"] === APP_CONSTANT.messageSuccess) {
-         refreshArtisan(); // Refresh the data after successful deletion
-        }
-      }
-    } catch (error) {
-      console.error("Error deleting advertisement:", error);
-    }
+  const handleDelete = () => {
+    onDeleteEvent(id);
   };
+
+  
 
   return (
     <Box className="recent-blog-posts">
       {/* <SimpleGrid columns={{ base: 1, md: 3, xl: 3 }} gap="20px" mb="20px"> */}
       <div className="post-box">
         <div className="post-img">
-          <Image src={imgUrl} className="img-fluid" alt="" />
+          <Image src={fileName} className="img-fluid" alt="" />
         </div>
-        <span className="post-date">{date}</span>
-        <h3 className="post-title">{businessName}</h3>
+        <span className="post-date">
+          {businessName}/{category}
+        </span>
+        <div dangerouslySetInnerHTML={{ __html: description }}></div>{" "}
         <Box
           display="flex"
           justifyContent="space-between"
@@ -64,7 +52,7 @@ export default function RecentArtisan({ imgUrl, businessName, date, id, refreshA
             colorScheme="red"
             variant="outline"
             fontSize="16px"
-            onClick={deleteUser}
+            onClick={handleDelete}
             isLoading={isLoading}
           >
             Delete
