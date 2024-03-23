@@ -37,7 +37,7 @@ const handleClick = () => {
     return (
         <Box>
              <Button colorScheme='purple' variant='outline' fontSize='16px' onClick={onOpen}>NEW BLOG</Button>
-            <Modal isOpen={isOpen} onClose={onClose} size="lg">
+            <Modal isOpen={isOpen} onClose={onClose} size="xl">
                 <ModalOverlay />
                 <ModalContent>
                     <ModalHeader>NEW BLOG</ModalHeader>

@@ -259,7 +259,7 @@ const fetchArtisanData = async () => {
         </Tbody>
       </Table>
 
-      <Modal isOpen={isOpen} onClose={onClose} size="lg">
+      <Modal isOpen={isOpen} onClose={onClose} size="xl">
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Modal Title</ModalHeader>

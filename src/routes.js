@@ -30,9 +30,11 @@ import Settings from "views/admin/settings";
 import User from "views/admin/user";
 
 
+
 // Auth Imports
 import SignInCentered from "views/auth/signIn";
 import ResetPassCentered from "views/reset/resetPass";
+import ForgetPassword from "views/auth/forgetpassword/ForgetPassword";
 
 const routes = [
   {
@@ -150,6 +152,16 @@ const routes = [
     icon: <Icon as={MdLock} width="20px" height="20px" color="inherit" />,
     component: ResetPassCentered,
   },
+
+  {
+    name: "Forget Password",
+    layout: "/auth",
+    path: "/forgot-password",
+    component: ForgetPassword,
+  },
+
+
+
   {
     name: "RTL Admin",
     layout: "/rtl",
