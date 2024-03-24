@@ -72,7 +72,7 @@ export default function NewBlog() {
       >
         NEW BLOG
       </Button>
-      <Modal isOpen={isOpen} onClose={onClose} size="lg">
+      <Modal isOpen={isOpen} onClose={onClose} size="xl">
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>New blog post</ModalHeader>

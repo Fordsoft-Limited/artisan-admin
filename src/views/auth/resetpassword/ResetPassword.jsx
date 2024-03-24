@@ -19,16 +19,14 @@ import {
 // Custom components
 import { HSeparator } from "components/separator/Separator";
 import DefaultAuth from "layouts/auth/Default";
+
 // Assets
 import illustration from "assets/img/auth/auth.png";
 import { FcGoogle } from "react-icons/fc";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { RiEyeCloseLine } from "react-icons/ri";
-import EntranceService from "../../../services/EntranceService";
-import LocalStorageService from "../../../services/LocalStorageService";
-import APP_CONSTANT from "../../../utils/Constant";
 
-function SignIn() {
+function ResetPassword() {
   // Chakra color mode
   const textColor = useColorModeValue("navy.700", "white");
   const textColorSecondary = "gray.400";
@@ -49,32 +47,17 @@ function SignIn() {
 
   const handleClick = () => setShow(!show);
 
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [rememberLogin, setRememberLogin] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
-  const history = useHistory();
-  const [isLoading, setIsLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    newpassword: "",
+    confirmPassword: "",
+  });
+
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent default form submission behavior
-    try {
-      setIsLoading(true);
-      const response = await EntranceService.login({ username, password });
-      if (response.data["statusCode"] === APP_CONSTANT.successCode) {
-        LocalStorageService.storeTokenFromResponse(response.data);
-        history.push("/admin/default");
-      } else {
-        setErrorMessage(response.data["data"]);
-      }
-      setIsLoading(false);
-    } catch (error) {
-      setIsLoading(false);
-      console.log(error?.response?.data["data"]);
-      setErrorMessage(error?.response?.data["data"]);
-    }
+    e.preventDefault();
+    console.log(formData);
   };
   return (
-    <form onSubmit={handleSubmit}>
+    <form>
       <DefaultAuth image={illustration}>
         <Flex
           maxW={{ base: "100%", md: "max-content" }}
@@ -91,7 +74,7 @@ function SignIn() {
         >
           <Box me="auto">
             <Heading color={textColor} fontSize="36px" mb="10px">
-              Sign In
+              Reset Password
             </Heading>
             <Text
               mb="36px"
@@ -100,7 +83,7 @@ function SignIn() {
               fontWeight="400"
               fontSize="md"
             >
-              Enter your email and password to sign in!
+              Enter your New Password and confirm password!
             </Text>
           </Box>
           <Flex
@@ -114,18 +97,30 @@ function SignIn() {
             me="auto"
             mb={{ base: "20px", md: "auto" }}
           >
-            
-            {errorMessage && (
-              <Text
-                mb="36px"
-                ms="4px"
-                color={"red.500"}
-                fontWeight="400"
-                fontSize="md"
-              >
-                {errorMessage}
+            {/* <Button
+              fontSize="sm"
+              me="0px"
+              mb="26px"
+              py="15px"
+              h="50px"
+              borderRadius="16px"
+              bg={googleBg}
+              color={googleText}
+              fontWeight="500"
+              _hover={googleHover}
+              _active={googleActive}
+              _focus={googleActive}
+            >
+              <Icon as={FcGoogle} w="20px" h="20px" me="10px" />
+              Sign in with Google
+            </Button> */}
+            {/* <Flex align="center" mb="25px">
+              <HSeparator />
+              <Text color="gray.400" mx="14px">
+                or
               </Text>
-            )}
+              <HSeparator />
+            </Flex> */}
             <FormControl>
               <FormLabel
                 display="flex"
@@ -135,19 +130,22 @@ function SignIn() {
                 color={textColor}
                 mb="8px"
               >
-                Username<Text color={brandStars}>*</Text>
+                New Password<Text color={brandStars}>*</Text>
               </FormLabel>
               <Input
                 isRequired={true}
                 variant="auth"
+                name="newpassword"
                 fontSize="sm"
                 ms={{ base: "0px", md: "0px" }}
-                type="email"
-                placeholder="mail@simmmple.com"
+                type={show ? "text" : "password"}
+                placeholder="New Password"
                 mb="24px"
                 fontWeight="500"
                 size="lg"
-                onChange={(e) => setUsername(e.target.value)}
+                onChange={(e) =>
+                  setFormData({ ...formData, newpassword: e.target.value })
+                }
               />
               <FormLabel
                 ms="4px"
@@ -156,18 +154,24 @@ function SignIn() {
                 color={textColor}
                 display="flex"
               >
-                Password<Text color={brandStars}>*</Text>
+                Confirm Password<Text color={brandStars}>*</Text>
               </FormLabel>
               <InputGroup size="md">
                 <Input
                   isRequired={true}
+                  name="confirmPassword"
                   fontSize="sm"
-                  placeholder="Min. 8 characters"
+                  placeholder="Confirm Password"
                   mb="24px"
                   size="lg"
                   type={show ? "text" : "password"}
                   variant="auth"
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      confirmpassword: e.target.value,
+                    })
+                  }
                 />
                 <InputRightElement display="flex" alignItems="center" mt="4px">
                   <Icon
@@ -178,36 +182,11 @@ function SignIn() {
                   />
                 </InputRightElement>
               </InputGroup>
-              <Flex justifyContent="flex-end" align="center" mb="24px">
-                {/* <FormControl display="flex" alignItems="center">
-                  <Checkbox
-                    id="remember-login"
-                    colorScheme="brandScheme"
-                    checked={rememberLogin}
-                    me="10px"
-                    onChange={(e) => setRememberLogin(e.target.checked)}
-                  />
-                  <FormLabel
-                    htmlFor="remember-login"
-                    mb="0"
-                    fontWeight="normal"
-                    color={textColor}
-                    fontSize="sm"
-                  >
-                    Keep me logged in
-                  </FormLabel>
-                </FormControl> */}
-                <NavLink to="/auth/forgot-password">
-                  <Text
-                    color={textColorBrand}
-                    fontSize="sm"
-                    w="124px"
-                    fontWeight="500"
-                  >
-                    Forgot password?
-                  </Text>
-                </NavLink>
-              </Flex>
+              <Flex
+                justifyContent="space-between"
+                align="center"
+                mb="24px"
+              ></Flex>
               <Button
                 type="submit"
                 fontSize="sm"
@@ -216,32 +195,18 @@ function SignIn() {
                 w="100%"
                 h="50"
                 mb="24px"
-                isLoading={isLoading}
+                onClick={handleSubmit}
               >
-                Sign In
+                Reset Password
               </Button>
             </FormControl>
-            {/* <Flex
+            <Flex
               flexDirection="column"
               justifyContent="center"
               alignItems="start"
               maxW="100%"
               mt="0px"
-            >
-              <Text color={textColorDetails} fontWeight="400" fontSize="14px">
-                Not registered yet?
-                <NavLink to="/auth/sign-up">
-                  <Text
-                    color={textColorBrand}
-                    as="span"
-                    ms="5px"
-                    fontWeight="500"
-                  >
-                    Create an Account
-                  </Text>
-                </NavLink>
-              </Text>
-            </Flex> */}
+            ></Flex>
           </Flex>
         </Flex>
       </DefaultAuth>
@@ -249,4 +214,4 @@ function SignIn() {
   );
 }
 
-export default SignIn;
+export default ResetPassword;

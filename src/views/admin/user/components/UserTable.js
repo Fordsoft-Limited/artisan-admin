@@ -361,7 +361,7 @@ export default function Users(props) {
         </Box>
       </div>
 
-      <Modal isOpen={isOpen} onClose={onClose} size="lg">
+      <Modal isOpen={isOpen} onClose={onClose} size="xl">
         <ModalOverlay />
         <ModalContent>
           <form onSubmit={sendInvitation}>

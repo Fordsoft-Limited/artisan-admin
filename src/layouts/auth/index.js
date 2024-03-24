@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import routes from "routes.js";
+import auths from "authRoutes.js";
 
 // Chakra imports
 import { Box, useColorModeValue } from "@chakra-ui/react";
@@ -41,17 +42,18 @@ export default function Auth() {
   document.documentElement.dir = "ltr";
   return (
     <Box>
-      <SidebarContext.Provider
+      {/* <SidebarContext.Provider
         value={{
           toggleSidebar,
           setToggleSidebar,
-        }}>
+        }}> */}
         <Box
           bg={authBg}
           float='right'
           minHeight='100vh'
           height='100%'
           position='relative'
+          // display="none"
           w='100%'
           transition='all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1)'
           transitionDuration='.2s, .2s, .35s'
@@ -60,7 +62,7 @@ export default function Auth() {
           {getRoute() ? (
             <Box mx='auto' minH='100vh'>
               <Switch>
-                {getRoutes(routes)}
+                {getRoutes(auths)}
                 <Redirect
                   from='/auth'
                   to='/auth/sign-in/default
@@ -70,7 +72,7 @@ export default function Auth() {
             </Box>
           ) : null}
         </Box>
-      </SidebarContext.Provider>
+      {/* </SidebarContext.Provider> */}
     </Box>
   );
 }

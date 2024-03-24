@@ -4,12 +4,12 @@ import { Text, Stack, Flex, Icon, Link, Button, StackDivider, Box, VStack, Switc
 import { HSeparator } from "components/separator/Separator";
 import { FaChevronRight } from "react-icons/fa";
 import { FaPowerOff } from "react-icons/fa";
-import { useHistory } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import LocalStorageService from "services/LocalStorageService";
 
 export default function Account() {
     const history = useHistory();
-    const logout=()=>{
+    const logout = () => {
         LocalStorageService.logout()
         history.push("/auth");
     }
@@ -18,22 +18,24 @@ export default function Account() {
             <Box mb="20px">
                 <Text fontSize="24px" fontWeight="bold" >Account</Text>
                 <HSeparator mb='20px' />
-                <VStack
-                    spacing={4}
-                    align='stretch'
-                >
-                    <Box h='50px' display="flex" justifyContent="space-between" alignItems="center" pr='3' pl='3' cursor="pointer">
-                        <Text fontSize="18px" color='grey' >Change Password</Text>
-                        <Text fontSize="18px" ><FaChevronRight /></Text>
-                    </Box>
-                    {/* <HSeparator mb='10px' /> */}
-                    {/* <Box h='50px' bg='tomato' display="flex" justifyContent="space-between">
+                <NavLink to="/auth/reset-password">
+                    <VStack
+                        spacing={4}
+                        align='stretch'
+                    >
+                        <Box h='50px' display="flex" justifyContent="space-between" alignItems="center" pr='3' pl='3' cursor="pointer">
+                            <Text fontSize="18px" color='grey' >Change Password</Text>
+                            <Text fontSize="18px" ><FaChevronRight /></Text>
+                        </Box>
+                        {/* <HSeparator mb='10px' /> */}
+                        {/* <Box h='50px' bg='tomato' display="flex" justifyContent="space-between">
                         2
                     </Box>
                     <Box h='50px' bg='pink.100' display="flex" justifyContent="space-between">
                         3
                     </Box> */}
-                </VStack>
+                    </VStack>
+                </NavLink>
             </Box>
 
             <Box>

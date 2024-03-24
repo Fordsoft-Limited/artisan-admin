@@ -27,7 +27,7 @@ export const barChartOptionsDailyTraffic = {
     theme: "dark",
   },
   xaxis: {
-    categories: ["00", "04", "08", "12", "14", "16", "18"],
+    categories: ["00", "02", "08", "12", "14", "16", "18"],
     show: false,
     labels: {
       show: true,
@@ -45,6 +45,7 @@ export const barChartOptionsDailyTraffic = {
     },
   },
   yaxis: {
+    
     show: false,
     color: "black",
     labels: {
@@ -54,6 +55,8 @@ export const barChartOptionsDailyTraffic = {
         fontSize: "14px",
       },
     },
+
+    
   },
   grid: {
     show: false,
@@ -97,7 +100,7 @@ export const barChartOptionsDailyTraffic = {
   },
   plotOptions: {
     bar: {
-      borderRadius: 10,
+      
       columnWidth: "40px",
     },
   },
