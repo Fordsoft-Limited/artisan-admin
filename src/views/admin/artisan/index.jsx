@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Box, SimpleGrid } from "@chakra-ui/react";
 import NewArtisan from "./components/NewArtisan";
 import RecentArtisan from "./components/RecentArtisan";
@@ -7,13 +7,13 @@ import ConversationService from "../../../services/ConversatonService";
 
 import APP_CONSTANT from "utils/Constant";
 
-export default function Advert() {
-  const[dataList, setDataList] = useState([])
-  const[selectedData, setSelectedData] = useState({})
+export default function Artisan() {
+  const [dataList, setDataList] = useState([]);
+  const [selectedData, setSelectedData] = useState({});
 
   const fetchData = async () => {
     try {
-      const{data} = await EntranceService.listPaginatedArtisan(
+      const { data } = await EntranceService.listPaginatedArtisan(
         APP_CONSTANT.defaultPage,
         APP_CONSTANT.defaultSize
       ); // Call the function with page and limit
@@ -22,9 +22,9 @@ export default function Advert() {
       console.error("Error fetching users:", error);
     }
   };
-const sendSelectedDataForEdit=(item)=>{
-  setSelectedData(item)
-}
+  const sendSelectedDataForEdit = (item) => {
+    setSelectedData(item);
+  };
   const deleteArtisan = async (userId) => {
     try {
       const prompt = window.confirm(
@@ -37,7 +37,7 @@ const sendSelectedDataForEdit=(item)=>{
         }
       }
     } catch (error) {
-      console.error("Error fetching users:", error);
+      console.error("Error fetching artisan:", error);
     }
   };
 
@@ -52,9 +52,9 @@ const sendSelectedDataForEdit=(item)=>{
         <SimpleGrid columns={{ base: 1, md: 3, xl: 3 }} gap="20px" mb="20px">
           {dataList.map((item) => (
             <RecentArtisan
-             data={item}
+              data={item}
               key={item.id}
-              onDeleteEvent={()=>deleteArtisan(item.id)}
+              onDeleteEvent={() => deleteArtisan(item.id)}
             />
           ))}
         </SimpleGrid>

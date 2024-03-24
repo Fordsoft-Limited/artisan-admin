@@ -36,20 +36,34 @@ const routes = [
     name: "Main Dashboard",
     layout: "/admin",
     path: "/default",
-    icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
+    icon: <Icon as={MdHome} width="20px" height="20px" color="inherit" />,
     component: MainDashboard,
   },
   {
     name: "Vistors",
     layout: "/admin",
-    icon: <Icon as={MdOutlinePersonOutline } width='20px' height='20px' color='inherit' />,
+    icon: (
+      <Icon
+        as={MdOutlinePersonOutline}
+        width="20px"
+        height="20px"
+        color="inherit"
+      />
+    ),
     path: "/visitor",
     component: Visitors,
   },
   {
     name: "Users",
     layout: "/admin",
-    icon: <Icon as={MdOutlinePersonOutline } width='20px' height='20px' color='inherit' />,
+    icon: (
+      <Icon
+        as={MdOutlinePersonOutline}
+        width="20px"
+        height="20px"
+        color="inherit"
+      />
+    ),
     path: "/user",
     component: User,
   },
@@ -63,21 +77,21 @@ const routes = [
   {
     name: "Artisan",
     layout: "/admin",
-    icon: <Icon as={GrUserWorker} width='20px' height='20px' color='inherit' />,
+    icon: <Icon as={GrUserWorker} width="20px" height="20px" color="inherit" />,
     path: "/artisan",
     component: Artisan,
   },
   {
     name: "Blogs",
     layout: "/admin",
-    icon: <Icon as={MdNewspaper } width='20px' height='20px' color='inherit' />,
+    icon: <Icon as={MdNewspaper} width="20px" height="20px" color="inherit" />,
     path: "/blogs",
     component: Blogs,
   },
   {
     name: "Settings",
     layout: "/admin",
-    icon: <Icon as={GoGear} width='20px' height='20px' color='inherit' />,
+    icon: <Icon as={GoGear} width="20px" height="20px" color="inherit" />,
     path: "/settings",
     component: Settings,
   },

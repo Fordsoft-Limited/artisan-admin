@@ -21,7 +21,7 @@ import {
   
   // Custom components
   import Card from "components/card/Card";
-  import Menu from "components/menu/MainMenu";
+  // import Menu from "components/menu/MainMenu";
   export default function VistorsTable(props) {
     const { columnsData } = props;
       const [tableData, setTableData ] = useState([])
@@ -82,7 +82,7 @@ import {
             lineHeight='100%'>
           Vistors Table
           </Text>
-          <Menu />
+          {/* <Menu /> */}
         </Flex>
         <Table {...getTableProps()} variant='simple' color='gray.500' mb='24px'>
           <Thead>

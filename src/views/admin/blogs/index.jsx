@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { Box, SimpleGrid } from "@chakra-ui/react";
 import NewBlog from "./components/NewBlog";
-import { blogData } from "./variables/BlogData";
 import RecentBlog from "./components/RecentBlog";
-import EntranceService from './../../../services/EntranceService';
-import APP_CONSTANT from './../../../utils/Constant'
-import ConversationService from "./../../../services/ConversatonService";
-export default function Blogs() {
-  const [dataList, setDataList] = useState([])
+import EntranceService from "./../../../services/EntranceService";
+import ConversationService from "../../../services/ConversatonService";
+
+import APP_CONSTANT from "utils/Constant";
+
+export default function Artisan() {
+  const [dataList, setDataList] = useState([]);
   const [selectedData, setSelectedData] = useState({});
 
-  const fetchBlogs = async () => {
+  const fetchBlog = async () => {
     try {
       const { data } = await EntranceService.listBlogs(
         APP_CONSTANT.defaultPage,
@@ -21,11 +22,9 @@ export default function Blogs() {
       console.error("Error fetching users:", error);
     }
   };
-
   const sendSelectedDataForEdit = (item) => {
     setSelectedData(item);
   };
-
   const deleteBlog = async (userId) => {
     try {
       const prompt = window.confirm(
@@ -34,16 +33,16 @@ export default function Blogs() {
       if (prompt) {
         const deleteResponse = await ConversationService.deleteBlog(userId);
         if (deleteResponse.data["message"] === APP_CONSTANT.messageSuccess) {
-          fetchBlogs();
+          fetchBlog();
         }
       }
     } catch (error) {
-      console.error("Error fetching users:", error);
+      console.error("Error fetching artisan:", error);
     }
   };
 
   useEffect(() => {
-    fetchBlogs();
+    fetchBlog();
   }, [dataList]);
 
   return (
@@ -55,7 +54,7 @@ export default function Blogs() {
             <RecentBlog
               data={item}
               key={item.id}
-              onDeleteEvent={()=>deleteBlog(item.id)}
+              onDeleteEvent={() => deleteBlog(item.id)}
             />
           ))}
         </SimpleGrid>
