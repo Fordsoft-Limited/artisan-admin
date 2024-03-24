@@ -4,6 +4,10 @@ import APP_CONSTANT from "../utils/Constant";
 const BASE_URL = APP_CONSTANT.baseUrl + "/actions";
 
 const ConversationService = {
+  async fetchDashBoardReport(reportYear) {
+    return await axiosInstance.get(`${BASE_URL}/dashboard/${reportYear}`);
+  },
+
   async addBlogWithAttachment(blogData) {
     const formData = new FormData();
     formData.append(
