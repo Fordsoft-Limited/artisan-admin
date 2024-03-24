@@ -29,12 +29,20 @@ export default function UserReports() {
   const boxBg = useColorModeValue("secondaryGray.300", "whiteAlpha.100");
   const currentYear = new Date().getFullYear();
   const[reportData, setReportData] = useState({})
+  const[chatData, setChatData] = useState([
+    {
+      name: "Monthly Visitor Report",
+      data: [20, 30, 40, 20, 45, 50, 30,40,90,20,12,30],
+    },
+  ])
  
   const fetchReport = async () => {
     try {
       const{data} = await ConversationService.fetchDashBoardReport(currentYear
       ); // Call the function with page and limit
-      setReportData(data["data"]);
+      const mainResponseData = data["data"]
+      setReportData(mainResponseData);
+      setChatData([{name: 'Monthly Visitors report', data: Object.values(mainResponseData["visitorReports"])}])
     } catch (error) {
       console.error("Error fetching users:", error);
     }
@@ -104,27 +112,7 @@ export default function UserReports() {
           name="Total Blogs"
           value={reportData?.blogsCount}
         />
-        {/* <MiniStatistics
-          endContent={
-            <Flex me='-16px' mt='10px'>
-              <FormLabel htmlFor='balance'>
-                <Avatar src={Usa} />
-              </FormLabel>
-              <Select
-                id='balance'
-                variant='mini'
-                mt='5px'
-                me='0px'
-                defaultValue='usd'>
-                <option value='usd'>USD</option>
-                <option value='eur'>EUR</option>
-                <option value='gba'>GBA</option>
-              </Select>
-            </Flex>
-          }
-          name='Your balance'
-          value='$1,000'
-        /> */}
+       
         <MiniStatistics
           startContent={
             <IconBox
@@ -155,7 +143,8 @@ export default function UserReports() {
 
       <SimpleGrid columns={{ base: 1, md: 1, xl: 1 }} gap="20px" mb="20px">
       
-        <DailyTraffic />
+        <DailyTraffic totalVisitor={reportData?.visitorCount} reportYear={currentYear}
+        barChartDataDailyTraffic={chatData}/>
       </SimpleGrid>
       <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap="20px" mb="20px">
       <MiniCalendar h="100%" minW="100%" selectRange={false} />

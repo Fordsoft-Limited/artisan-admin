@@ -6,7 +6,6 @@ import BarChart from "components/charts/BarChart";
 
 import Card from "components/card/Card.js";
 import {
-  barChartDataDailyTraffic,
   barChartOptionsDailyTraffic,
 } from "variables/charts";
 
@@ -14,7 +13,9 @@ import {
 import { RiArrowUpSFill } from "react-icons/ri";
 
 export default function DailyTraffic(props) {
-  const { ...rest } = props;
+  const { totalVisitor,reportYear, barChartDataDailyTraffic,...rest } = props;
+  console.log(" The Data Received:::::", totalVisitor, reportYear)
+  console.log(barChartDataDailyTraffic)
 
   // Chakra Color Mode
   const textColor = useColorModeValue("secondaryGray.900", "white");
@@ -28,30 +29,14 @@ export default function DailyTraffic(props) {
               color='secondaryGray.600'
               fontSize='sm'
               fontWeight='500'>
-          Number of  Visitors 
-            </Text>
-          </Flex>
-          <Flex align='end'>
-            <Text
-              color={textColor}
-              fontSize='34px'
-              fontWeight='700'
-              lineHeight='100%'>
-              40
-            </Text>
-            <Text
-              ms='6px'
-              color='secondaryGray.600'
-              fontSize='sm'
-              fontWeight='500'>
-              Visitors
+          Monthly visitors report
             </Text>
           </Flex>
         </Flex>
         <Flex align='center'>
           <Icon as={RiArrowUpSFill} color='green.500' />
           <Text color='green.500' fontSize='sm' fontWeight='700'>
-            +2.45%
+            {reportYear}
           </Text>
         </Flex>
       </Flex>

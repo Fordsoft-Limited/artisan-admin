@@ -2,20 +2,15 @@ import React from "react";
 import {
   Box,
   Button,
-  Checkbox,
   Flex,
   FormControl,
   FormLabel,
   Heading,
-  Icon,
   Input,
-  InputGroup,
-  InputRightElement,
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
 
-import DefaultAuth from "layouts/auth/Default";
 
 function ForgetPassword() {
   const textColor = useColorModeValue("navy.700", "white");

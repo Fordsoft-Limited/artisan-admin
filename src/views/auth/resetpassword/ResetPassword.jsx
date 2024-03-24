@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-import { NavLink, useHistory } from "react-router-dom";
-// Chakra imports
+import { useParams,useHistory } from 'react-router-dom';
 import {
   Box,
   Button,
-  Checkbox,
   Flex,
   FormControl,
   FormLabel,
@@ -17,44 +15,52 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 // Custom components
-import { HSeparator } from "components/separator/Separator";
 import DefaultAuth from "layouts/auth/Default";
 
 // Assets
 import illustration from "assets/img/auth/auth.png";
-import { FcGoogle } from "react-icons/fc";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { RiEyeCloseLine } from "react-icons/ri";
+import EntranceService from "services/EntranceService";
+import APP_CONSTANT from "utils/Constant";
 
 function ResetPassword() {
+  const [isLoading, setIsLoading] = useState(false);
   // Chakra color mode
   const textColor = useColorModeValue("navy.700", "white");
   const textColorSecondary = "gray.400";
-  const textColorDetails = useColorModeValue("navy.700", "secondaryGray.600");
-  const textColorBrand = useColorModeValue("brand.500", "white");
   const brandStars = useColorModeValue("brand.500", "brand.400");
-  const googleBg = useColorModeValue("secondaryGray.300", "whiteAlpha.200");
-  const googleText = useColorModeValue("navy.700", "white");
-  const googleHover = useColorModeValue(
-    { bg: "gray.200" },
-    { bg: "whiteAlpha.300" }
-  );
-  const googleActive = useColorModeValue(
-    { bg: "secondaryGray.300" },
-    { bg: "whiteAlpha.200" }
-  );
   const [show, setShow] = React.useState(false);
-
+  const [errorMessage, setErrorMessage] = useState("");
+  const history = useHistory();
   const handleClick = () => setShow(!show);
+  const { invitationCode } = useParams();
 
   const [formData, setFormData] = useState({
-    newpassword: "",
-    confirmPassword: "",
+    password: "",
+    confirmPassword: ""
   });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+    if(formData.password !== formData.confirmPassword){
+      setErrorMessage("Password not match with confirm password")
+      return;
+    }
+    try {
+      setIsLoading(true);
+      const response = await EntranceService.activateAccount({ password:formData.password, invitationCode });
+      if (response.data["statusCode"] === APP_CONSTANT.successCode) {
+        history.push("/auth/");
+      } else {
+        setErrorMessage(response.data["data"]);
+      }
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+      console.log(error?.response?.data["data"]);
+      setErrorMessage(error?.response?.data["data"]);
+    }
   };
   return (
     <form>
@@ -74,7 +80,7 @@ function ResetPassword() {
         >
           <Box me="auto">
             <Heading color={textColor} fontSize="36px" mb="10px">
-              Reset Password
+             Complete account setup
             </Heading>
             <Text
               mb="36px"
@@ -85,6 +91,17 @@ function ResetPassword() {
             >
               Enter your New Password and confirm password!
             </Text>
+            {errorMessage && (
+              <Text
+                mb="36px"
+                ms="4px"
+                color={"red.500"}
+                fontWeight="400"
+                fontSize="md"
+              >
+                {errorMessage}
+              </Text>
+            )}
           </Box>
           <Flex
             zIndex="2"
@@ -97,30 +114,6 @@ function ResetPassword() {
             me="auto"
             mb={{ base: "20px", md: "auto" }}
           >
-            {/* <Button
-              fontSize="sm"
-              me="0px"
-              mb="26px"
-              py="15px"
-              h="50px"
-              borderRadius="16px"
-              bg={googleBg}
-              color={googleText}
-              fontWeight="500"
-              _hover={googleHover}
-              _active={googleActive}
-              _focus={googleActive}
-            >
-              <Icon as={FcGoogle} w="20px" h="20px" me="10px" />
-              Sign in with Google
-            </Button> */}
-            {/* <Flex align="center" mb="25px">
-              <HSeparator />
-              <Text color="gray.400" mx="14px">
-                or
-              </Text>
-              <HSeparator />
-            </Flex> */}
             <FormControl>
               <FormLabel
                 display="flex"
@@ -144,7 +137,7 @@ function ResetPassword() {
                 fontWeight="500"
                 size="lg"
                 onChange={(e) =>
-                  setFormData({ ...formData, newpassword: e.target.value })
+                  setFormData({ ...formData, password: e.target.value })
                 }
               />
               <FormLabel
@@ -196,8 +189,9 @@ function ResetPassword() {
                 h="50"
                 mb="24px"
                 onClick={handleSubmit}
+                isLoading={isLoading}
               >
-                Reset Password
+                Proceed
               </Button>
             </FormControl>
             <Flex
