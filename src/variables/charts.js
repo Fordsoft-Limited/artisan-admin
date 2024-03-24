@@ -2,8 +2,8 @@
 
 export const barChartDataDailyTraffic = [
   {
-    name: "Daily Traffic",
-    data: [20, 30, 40, 20, 45, 50, 30],
+    name: "Number of Vistors per Month",
+    data: [20, 30, 40, 20, 45, 50, 30,40,90,20,12,30],
   },
 ];
 
@@ -27,7 +27,7 @@ export const barChartOptionsDailyTraffic = {
     theme: "dark",
   },
   xaxis: {
-    categories: ["00", "02", "08", "12", "14", "16", "18"],
+    categories: ["January", "February", "March", "April", "May", "June", "July","August", "September", "October", "November", "December"],
     show: false,
     labels: {
       show: true,
