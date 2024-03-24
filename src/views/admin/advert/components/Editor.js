@@ -87,9 +87,6 @@ function Editor({ formData, onContentChange, onFileChange, errors }) {
               value={formData.category}
               onChange={(e) => onContentChange("category", e.target.value)}
             />
-            {errors.category && (
-              <div style={{ color: "#ff0000" }}>{errors.category}</div>
-            )}
           </GridItem>
           <GridItem colSpan={1}>
             <Input
@@ -99,9 +96,6 @@ function Editor({ formData, onContentChange, onFileChange, errors }) {
               value={formData.street}
               onChange={(e) => onContentChange("street", e.target.value)}
             />
-            {errors.city && (
-              <div style={{ color: "#ff0000" }}>{errors.city}</div>
-            )}
           </GridItem>
           <GridItem colSpan={1}>
             <Input
@@ -111,9 +105,6 @@ function Editor({ formData, onContentChange, onFileChange, errors }) {
               value={formData.city}
               onChange={(e) => onContentChange("city", e.target.value)}
             />
-            {errors.city && (
-              <div style={{ color: "#ff0000" }}>{errors.city}</div>
-            )}
           </GridItem>
           <GridItem colSpan={1}>
             <Input

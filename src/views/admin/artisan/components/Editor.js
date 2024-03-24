@@ -25,7 +25,7 @@ function Editor({ formData, onContentChange, onFileChange, errors }) {
             <Input
               type="text"
               required
-              placeholder="Name*"
+              placeholder="Name"
               mb="10px"
               value={formData.name}
               onChange={(e) => onContentChange("name", e.target.value)}
@@ -38,7 +38,7 @@ function Editor({ formData, onContentChange, onFileChange, errors }) {
             <Input
               type="text"
               required
-              placeholder="Email*"
+              placeholder="Email"
               mb="10px"
               value={formData.email}
               onChange={(e) => onContentChange("email", e.target.value)}
@@ -51,7 +51,7 @@ function Editor({ formData, onContentChange, onFileChange, errors }) {
             <Input
               type="number"
               required
-              placeholder="Phone number*"
+              placeholder="Phone number"
               mb="10px"
               value={formData.phone}
               onChange={(e) => onContentChange("phone", e.target.value)}
@@ -76,7 +76,7 @@ function Editor({ formData, onContentChange, onFileChange, errors }) {
           <GridItem colSpan={2}>
             <Input
               type="text"
-              placeholder="WebsiteLink"
+              placeholder="WebsiteLink*"
               mb="10px"
               value={formData.websiteLink}
               onChange={(e) => onContentChange("websiteLink", e.target.value)}
@@ -91,9 +91,6 @@ function Editor({ formData, onContentChange, onFileChange, errors }) {
               value={formData.businessType}
               onChange={(e) => onContentChange("businessType", e.target.value)}
             />
-            {errors.businessType && (
-              <div style={{ color: "#ff0000" }}>{errors.businessType}</div>
-            )}
           </GridItem>
           <GridItem colSpan={1}>
             <Input
@@ -104,9 +101,6 @@ function Editor({ formData, onContentChange, onFileChange, errors }) {
               value={formData.street}
               onChange={(e) => onContentChange("street", e.target.value)}
             />
-            {errors.street && (
-              <div style={{ color: "#ff0000" }}>{errors.street}</div>
-            )}
           </GridItem>
           <GridItem colSpan={1}>
             <Input
@@ -117,9 +111,6 @@ function Editor({ formData, onContentChange, onFileChange, errors }) {
               value={formData.city}
               onChange={(e) => onContentChange("city", e.target.value)}
             />
-            {errors.city && (
-              <div style={{ color: "#ff0000" }}>{errors.city}</div>
-            )}
           </GridItem>
           <GridItem colSpan={1}>
             <Input
@@ -132,12 +123,9 @@ function Editor({ formData, onContentChange, onFileChange, errors }) {
           </GridItem>
           <GridItem colSpan={2}>
             <UploadArtisan
-              title="Pick a file to upload*"
+              title="Pick a file to upload"
               onFileChange={onFileChange}
             />
-            {errors.file && (
-              <div style={{ color: "#ff0000" }}>{errors.file}</div>
-            )}
           </GridItem>
           <GridItem colSpan={2}>
             <ReactQuill

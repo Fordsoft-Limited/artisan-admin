@@ -1,12 +1,9 @@
 import React, { useState } from "react";
 import { Image, Button, Box } from "@chakra-ui/react";
 import "assets/css/blog.css";
-
-export default function RecentBlog({ data, onDeleteEvent }) {
-  const { title, id, description, mediaName } = data;
-
-  const [isLoading, setIsLoading] = useState(false);
-
+export default function RecentArtisan({ data, onDeleteEvent }) {
+const { title, id, description, mediaName } = data;  
+const [isLoading, setIsLoading] = useState(false);
   const handleClick = () => {
     setIsLoading(true);
 
@@ -21,16 +18,15 @@ export default function RecentBlog({ data, onDeleteEvent }) {
 
   return (
     <Box className="recent-blog-posts">
+      {/* <SimpleGrid columns={{ base: 1, md: 3, xl: 3 }} gap="20px" mb="20px"> */}
       <div className="post-box">
         <div className="post-img">
           <Image src={mediaName} className="img-fluid" alt="" />
         </div>
-        <span className="post-date">{title}</span>
+        <span className="post-date">
+          {title}
+        </span>
         <div dangerouslySetInnerHTML={{ __html: description }}></div>{" "}
-        <a href="blog-single.html" className="readmore stretched-link mt-auto">
-          <span>Read More</span>
-          <i className="bi bi-arrow-right"></i>
-        </a>
         <Box
           display="flex"
           justifyContent="space-between"
@@ -57,6 +53,7 @@ export default function RecentBlog({ data, onDeleteEvent }) {
           </Button>
         </Box>
       </div>
+      {/* </SimpleGrid> */}
     </Box>
   );
 }

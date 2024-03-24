@@ -78,26 +78,9 @@ export default function NewArtisan() {
       valid = false;
     }
 
-    // Perform city for each field
-    if (!formData.city.trim()) {
-      newErrors.city = "City is required";
-      valid = false;
-    }
-
-    // Perform street for each field
-    if (!formData.street.trim()) {
-      newErrors.street = "Street is required";
-      valid = false;
-    }
-    // Perform Business type for each field
-    if (!formData.category.trim()) {
-      newErrors.category = "Category is required";
-      valid = false;
-    }
-
-    // Perform Business type for each field
+    // Perform validation for each field
     if (!formData.businessName.trim()) {
-      newErrors.businessName = "Business Name is required";
+      newErrors.businessName = "Business name is required";
       valid = false;
     }
 

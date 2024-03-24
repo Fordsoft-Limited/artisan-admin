@@ -77,25 +77,9 @@ const validateForm = () => {
     valid = false;
   }
 
-  // Perform city for each field
-  if (!formData.city.trim()) {
-    newErrors.city = "City name is required";
-    valid = false;
-  }
-
-  // Perform street for each field
-  if (!formData.street.trim()) {
-    newErrors.street = "Street name is required";
-    valid = false;
-  }
-  // Perform Business type for each field
-  if (!formData.businessType.trim()) {
-    newErrors.businessType = "Business type is required";
-    valid = false;
-  }
-  // Perform Business Name type for each field
+  // Perform validation for each field
   if (!formData.businessName.trim()) {
-    newErrors.businessName = "Business name is required";
+    newErrors.businessName = "Business Name is required";
     valid = false;
   }
 
