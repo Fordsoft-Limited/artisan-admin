@@ -74,6 +74,12 @@ const ConversationService = {
     });
   },
 
+  async changedpassword(userId, changePasswordRequest) {
+    return await axiosInstance.post(
+      `${BASE_URL}/change-password/${userId}`,
+      changePasswordRequest
+    );
+  },
 
   async deleteBlog(id) {
     return await axiosInstance.delete(`${BASE_URL}/deleteBlog/${id}`);
@@ -82,7 +88,7 @@ const ConversationService = {
     return await axiosInstance.delete(`${BASE_URL}/user/delete/${id}`);
   },
   async deleteUser(id) {
-      return await axiosInstance.delete(`${BASE_URL}/user/delete/${id}`);
+    return await axiosInstance.delete(`${BASE_URL}/user/delete/${id}`);
   },
 
   async deleteArtisan(id) {

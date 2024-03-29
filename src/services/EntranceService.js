@@ -60,12 +60,7 @@ const EntranceService = {
     return await axios.post(`${BASE_URL}/visitor/register`, visitorRequest);
   },
 
-  async changedpassword(userId, changePasswordRequest) {
-    return await axios.post(
-      `${BASE_URL}/change-password/${userId}`,
-      changePasswordRequest
-    );
-  },
+ 
 
   async resetpassword(userId, resetPasswordRequest) {
     return await axios.post(
