@@ -15,9 +15,12 @@ export default function RecentBlog({ data, onDeleteEvent }) {
     }, 2000);
   };
 
-  const handleDelete = () => {
-    onDeleteEvent(id);
-  };
+  // const handleDelete = () => {
+  //   onDeleteEvent(id);
+  // };
+
+  // Remove <p> tags from the description
+  const sanitizedDescription = description.replace(/<\/?p>/g, "");
 
   return (
     <Box className="recent-blog-posts">
@@ -26,7 +29,7 @@ export default function RecentBlog({ data, onDeleteEvent }) {
           <Image src={mediaName} className="img-fluid" alt="" />
         </div>
         <span className="post-date">{title}</span>
-        <div dangerouslySetInnerHTML={{ __html: description }}></div>{" "}
+        <div dangerouslySetInnerHTML={{ __html: sanitizedDescription }}></div>{" "}
         <a href="blog-single.html" className="readmore stretched-link mt-auto">
           <span>Read More</span>
           <i className="bi bi-arrow-right"></i>
@@ -50,7 +53,7 @@ export default function RecentBlog({ data, onDeleteEvent }) {
             colorScheme="red"
             variant="outline"
             fontSize="16px"
-            onClick={handleDelete}
+            onClick={() =>onDeleteEvent(id) }
             isLoading={isLoading}
           >
             Delete

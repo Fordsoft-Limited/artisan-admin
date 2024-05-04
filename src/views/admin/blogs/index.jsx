@@ -55,7 +55,7 @@ export default function Blogs() {
             <RecentBlog
               data={item}
               key={item.id}
-              onDeleteEvent={()=>deleteBlog(item.id)}
+              onDeleteEvent={deleteBlog}
             />
           ))}
         </SimpleGrid>

@@ -40,7 +40,10 @@ function Editor({ formData, onContentChange, onFileChange, }) {
           value={formData.title}
           onChange={(e) => onContentChange("title", e.target.value)}
         />
-        <UploadBlog title="Pick a file to upload" onFileChange={onFileChange} />
+        <UploadBlog
+          title="Pick a file to upload"
+          onFileChange={onFileChange}
+        />
         <ReactQuill
           className="add-new-post__editor mb-1"
           value={formData.content}

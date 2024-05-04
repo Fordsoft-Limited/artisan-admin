@@ -18,10 +18,10 @@ import './style.css'; // Import the CSS file for styling
     });
   
     return (
-      <div className="upload-container">
+      <div className="upload-container" >
         <div
           {...getRootProps()}
-          className={`dropzone ${isDragActive ? 'active' : ''}`}
+          className={`dropzone ${isDragActive ? "active" : ""}`}
         >
           <input {...getInputProps()} />
           {isDragActive ? (
@@ -30,7 +30,7 @@ import './style.css'; // Import the CSS file for styling
             <p>Drag and drop file here or click to browse</p>
           )}
         </div>
-  
+
         <div className="file-list">
           <h3>Uploaded File:</h3>
           {uploadedFiles.length > 0 ? (
